@@ -55,3 +55,6 @@ This directory contains the logic for the reddit bot
 
 ### /routes
 This directory contains all Express Routers, which are the endpoints used for internal functionality
+
+#### /botRoutes
+This directory contains express routes that interact with the Discord and Reddit bots
