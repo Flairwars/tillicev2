@@ -11,6 +11,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
                                     .replace(/\s+/g,"")
                                     .split("")
                                     .sort()
+
     // Filters out any duplicates and any chars that are not letters
     letters = letters.filter((elem, pos) => letters.indexOf(elem) === pos && elem.toUpperCase() !== elem.toLowerCase())
 
