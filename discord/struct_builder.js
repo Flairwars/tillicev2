@@ -11,7 +11,7 @@ module.exports = (msg, guildID, memberID, cb) => {
     let CommandSubstring = msg.content.split('~')[1].split(' ') // Splits up a command message
     CommandStruct.command = CommandSubstring[0] // The first string in the substring array
     CommandStruct.args = CommandSubstring.slice(1, CommandSubstring.length+1) // Pass the rest of the message as args
-    CommandStruct.channelID = msg.channel.id // The ID of the channel that the channel was used in
+    CommandStruct.message = msg // The message itself
 
     // TODO: Build Permission data into PermStruct. It should pull user data from the DB for
     // users who are minimods/mods and let them do certain things in any server that tilice is in,

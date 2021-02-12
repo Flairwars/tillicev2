@@ -2,7 +2,13 @@
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
-    console.log('Pong')
+    let msg = CommandStruct.message;
+    msg.reply('Ping...')
+        .then(m =>{
+            const ping = m.createdTimestamp - msg.createdTimestamp;
+
+            m.edit(`Pong!\nConnection latency: ${ping}ms`);
+        });
 }
 
 // This should be a string, it will be used in the detailed help command for a specific command
