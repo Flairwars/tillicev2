@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const cors = require('cors')
 
+// Use a .env file if one exists (helps for dev environment)
+require('dotenv').config()
+
 // Setting up express application and socket.io application
 const app = express();
 const http = require('http').createServer(app)
@@ -23,6 +26,7 @@ app.use(cors())
 
 // Router initialization
 app.use('/bot', require('./routes/botRouter'))
+app.use('/auth', require('./routes/authRouter'))
 
 // For every route that should go to the frontend, send the static index.html file built from
 // Angular
