@@ -30,3 +30,11 @@ module.exports.SendImageEmbed = (ImageURL, Caption) => {
     Embed.setTitle(Caption)
     return Embed
 }
+
+module.exports.SendTextEmbed = (Title, Description) => {
+    let Embed = BaseEmbed()
+    .setTitle(Title)
+    .setDescription(Description)
+
+    return Embed
+}
