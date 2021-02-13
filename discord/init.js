@@ -12,7 +12,7 @@ const buildStructs = require('./struct_builder')
 const embeds = require('./template_embeds')
 
 // This will contain all the commands when loaded, allowing reference to them later
-let CommandRegistry = {}
+client.CommandRegistry = {}
 
 // Get a path to the commands directory
 const normalizedPath = require('path').join(__dirname, "commands")
@@ -20,8 +20,8 @@ const normalizedPath = require('path').join(__dirname, "commands")
 // For each file in the commands directory...
 const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
   let extensionlessFilename = file.split('.js')[0]
-  // Set a member in CommandRegistry to the exports of a file in /commands
-  CommandRegistry[extensionlessFilename] = require('./commands/' + file)
+  // Set a member in client.CommandRegistry to the exports of a file in /commands
+  client.CommandRegistry[extensionlessFilename] = require('./commands/' + file)
 
   // Let us know it loaded
   console.log(`Loaded command from ${file}`)
@@ -47,34 +47,34 @@ client.on('message', msg => {
         let ResponseStruct = {}
 
         // For every command entry in the Command Registry...
-        Object.keys(CommandRegistry).forEach(command => {
+        Object.keys(client.CommandRegistry).forEach(command => {
           // If a category has not yet been seen, add it to the reponse struct and initialize an empty array
-          if (!ResponseStruct.hasOwnProperty(CommandRegistry[command].Category)) 
-            ResponseStruct[CommandRegistry[command].Category] = []
+          if (!ResponseStruct.hasOwnProperty(client.CommandRegistry[command].Category)) 
+            ResponseStruct[client.CommandRegistry[command].Category] = []
           
           // Add the command name under the category
-          ResponseStruct[CommandRegistry[command].Category].push(command)
+          ResponseStruct[client.CommandRegistry[command].Category].push(command)
         })
 
         // Send the General Help Embed, with categories and command names
         msg.channel.send(embeds.GeneralHelpEmbed(ResponseStruct))
       }
       // Specific help command issued (i.e. ~help <command name>)
-      else if (CommandStruct.command === 'help' && CommandRegistry.hasOwnProperty(CommandStruct.args[0])) {
+      else if (CommandStruct.command === 'help' && client.CommandRegistry.hasOwnProperty(CommandStruct.args[0])) {
         // Send help message with command's help text
         msg.channel.send(
           embeds.CommandHelpEmbed(
             CommandStruct.args[0], // The command name, as issued from ~help <command name>
-            CommandRegistry[CommandStruct.args[0]].helpText // The helptext retrieved from its reference in the Command Registry
+            client.CommandRegistry[CommandStruct.args[0]].helpText // The helptext retrieved from its reference in the Command Registry
             )
           )
       }
       // Otherwise...
       else {
         // See if we can run the command
-        if (CommandRegistry.hasOwnProperty(CommandStruct.command)) {
+        if (client.CommandRegistry.hasOwnProperty(CommandStruct.command)) {
           // If so, send it
-          CommandRegistry[CommandStruct.command].run(CommandStruct, PermStruct)
+          client.CommandRegistry[CommandStruct.command].run(CommandStruct, PermStruct)
         }
         else {
           // Send some message about that command not being recognized, or do nothing
