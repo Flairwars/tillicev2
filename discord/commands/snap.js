@@ -1,12 +1,12 @@
 module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
-    var msg.mentions.members.first()
+    var member = msg.mentions.members.first()
     member = member ? member : msg.member
-    const snapped = (member.user.id[member.user.id.length - 1] % 2) === 0;
-    
-    const ImageURL = await helpers.GetFoxImage('https://randomfox.ca/floof/')
-    console.log(ImageURL)
-    msg.reply(embeds.SendImageEmbed(ImageURL, 'Fox'))
+    const snapped = (member.user.id[0] % 2) === 0;
+    const snappedMessage = snapped
+                            ? `${member.user.username} was **SNAPPED**`
+                            : `${member.user.username} was **SPARED**`;
+    msg.reply(snappedMessage)
 }
 
 module.exports.helpText = `Snaps or spares the mentioned user`
