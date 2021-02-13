@@ -32,7 +32,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
     // Build the embed with the avatar
     let embed = new Discord.MessageEmbed()
-        .setImage(member.user.avatarURL())
+        .setImage(member.user.avatarURL({size:1024}))
         .setColor(0xC9DDFF)
 
     msg.channel.send(embed)
