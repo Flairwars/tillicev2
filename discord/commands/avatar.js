@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const embeds = require('../template_embeds')
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
@@ -30,12 +30,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
         }
     }
 
-    // Build the embed with the avatar
-    let embed = new Discord.MessageEmbed()
-        .setImage(member.user.avatarURL({size:1024}))
-        .setColor(0xC9DDFF)
-
-    msg.channel.send(embed)
+    msg.channel.send(embeds.SendImageEmbed(member.user.avatarURL({size:1024}), member.displayName))
 }
 
 // This should be a string, it will be used in the detailed help command for a specific command
