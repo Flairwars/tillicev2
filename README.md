@@ -4,7 +4,8 @@ This is the Tilice Bot for FlairWars, rewritten from the ground up
 # Setup
 ## Dependencies
 Angular CLI https://angular.io/guide/setup-local
-NodeJS/NPM https://nodejs.org/en/download/
+
+NodeJS/NPM https://nodejs.org/en/download/ - At minimum version 12
 ### Setup
 Running `npm install` in both the root directory and in the `/Frontend` directory should get you going.
 
@@ -55,3 +56,6 @@ This directory contains the logic for the reddit bot
 
 ### /routes
 This directory contains all Express Routers, which are the endpoints used for internal functionality
+
+#### /botRoutes
+This directory contains express routes that interact with the Discord and Reddit bots

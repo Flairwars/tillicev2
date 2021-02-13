@@ -22,3 +22,11 @@ module.exports.CommandHelpEmbed = (CommandName, CommandHelp) => {
     Embed.addField(CommandName, CommandHelp)
     return Embed
 }
+
+
+module.exports.SendImageEmbed = (ImageURL, Caption) => {
+    let Embed = BaseEmbed()
+    Embed.setImage(ImageURL)
+    Embed.setTitle(Caption)
+    return Embed
+}
