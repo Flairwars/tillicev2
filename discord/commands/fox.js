@@ -4,7 +4,6 @@ const helpers = require('../helpers.js');
 module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
     const ImageURL = await helpers.GetFoxImage('https://randomfox.ca/floof/')
-    console.log(ImageURL)
     msg.reply(embeds.SendImageEmbed(ImageURL, 'Fox'))
 }
 
