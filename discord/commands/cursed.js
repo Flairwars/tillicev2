@@ -1,7 +1,7 @@
 const embeds = require('../template_embeds')
 const helpers = require('../helpers.js');
 
-const subreddit = 'sadcats'
+const subreddit = 'cursedimages'
 
 module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
