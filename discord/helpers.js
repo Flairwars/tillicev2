@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const RedditClient = require('../reddit/init');
-const r = require('snoowrap')
 
 module.exports.GetCatDogImage = async (APIURL) => {
     const data = await fetch(APIURL)
@@ -27,7 +26,7 @@ module.exports.GetJoke = async (APIURL) => {
 
 module.exports.getRandomRedditImage = async (Subreddit) => {
     //fetches random image off of specified subreddit
-    const attempsLimit = 10;
+    const attempsLimit = 20;
     let attempts = 0;
     console.log(Subreddit)
     do {
@@ -39,11 +38,7 @@ module.exports.getRandomRedditImage = async (Subreddit) => {
     return;
 }
 
-module.exports.getRandomEntry = async (collection) => {
+module.exports.getRandomEntry = (collection) => {
     const index = Math.floor(Math.random() * collection.length);
         return collection[index];
 }
-
-
-
-
