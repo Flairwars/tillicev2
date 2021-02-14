@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const RedditClient = require('../reddit/init');
 
 module.exports.GetCatDogImage = async (APIURL) => {
     const data = await fetch(APIURL)
@@ -21,4 +22,23 @@ module.exports.GetJoke = async (APIURL) => {
     const data = await fetch(APIURL, {headers: headers})
     const json = await data.json()
     return json.joke
+}
+
+module.exports.getRandomRedditImage = async (Subreddit) => {
+    //fetches random image off of specified subreddit
+    const attempsLimit = 20;
+    let attempts = 0;
+    console.log(Subreddit)
+    do {
+        const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
+        const allowed = post.post_hint === 'image' && !post.over_18;
+        if(allowed) return post.url;
+        attempts++;
+    } while (attempts < attempsLimit);
+    return;
+}
+
+module.exports.getRandomEntry = (collection) => {
+    const index = Math.floor(Math.random() * collection.length);
+        return collection[index];
 }
