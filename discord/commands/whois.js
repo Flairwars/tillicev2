@@ -2,7 +2,7 @@ const helpers = require('../helpers.js');
 const Discord = require("discord.js");
 const RedditClient = require('../../reddit/init');
 
-// Placeholder until the flairinfo is available somewhere else
+//TODO: Placeholder until the flairinfo is available somewhere else
 const flairInfo = {
     "Red": { colourHex: "#AF0303"},
 
@@ -34,7 +34,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     // If the member has no nickname, then they most likely won't have a connected Reddit account yet
     if (!member.nickname) {
         await msg.channel.send(`User ${member.user.username} doesn't have a nickname - sending Discord info only.`)
-        await msg.channel.send(await buildDiscordEmbed(member));
+        await msg.channel.send(buildDiscordEmbed(member));
         return;
     }
 
@@ -56,22 +56,15 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     // Try to get the redditUser object
     try {
         redditUser = await RedditClient.getUser(redditName);
-        // An error isn't automatically cast if the user doesn't exist. So we are trying to access something to invoke an error.
-        redditUser.id;
+        // An error isn't automatically thrown if the user doesn't exist.
+        // So we are trying to access something to invoke an error.
+        await redditUser.id;
     } catch (error) {
         await msg.channel.send(`This is not a valid Reddit account: https://www.reddit.com/u/${redditName}; sending Discord info only.`);
-        await msg.channel.send(await buildDiscordEmbed(member));
+        await msg.channel.send(buildDiscordEmbed(member));
         return;
     }
-    /*
-    let flair = (await RedditClient.getSubreddit('flairwars').getUserFlair(redditName))
-        .flair_text.split(' ')[0];
 
-    let karma = (await redditUser.link_karma) + (await redditUser.comment_karma);
-    let trophies = await redditUser.getTrophies();
-
-    console.log(karma)
-    console.log(trophies)*/
     await msg.channel.send(await buildRedditEmbed(member, redditUser));
 }
 
@@ -81,7 +74,7 @@ module.exports.helpText = `Gives information about a user.`
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Misc`
 
-async function buildDiscordEmbed(member) {
+function buildDiscordEmbed(member) {
     // Build the basis of the embed
     const embed = new Discord.MessageEmbed()
         .setColor("#d4d4d4")
@@ -114,6 +107,7 @@ async function buildRedditEmbed(member, redditUser) {
     } catch(error) {
         flair = "None"
     }
+
     let karma = (await redditUser.link_karma) + (await redditUser.comment_karma);
 
     let trophies = (await redditUser.getTrophies()).trophies;
