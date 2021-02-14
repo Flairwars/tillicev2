@@ -77,7 +77,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             title = "No rule defined.";
             description = "For a complete list of rules, head to: <#463831713651359774>"        
     }
-    msg.reply(embeds.SendTextEmbed(title, description))
+    msg.reply(embeds.SendEmbed(title, description))
 }
 
 module.exports.helpText = `Shows a specified rule from the #rules channel`
