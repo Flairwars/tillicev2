@@ -4,10 +4,10 @@
 module.exports.run = (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
     msg.reply('Ping...')
-        .then(m =>{
+        .then(m => {
             const ping = m.createdTimestamp - msg.createdTimestamp;
 
-            m.edit(`Pong!\nConnection latency: ${ping}ms`);
+            m.edit(`Pong!\nConnection latency: ${ping}ms\nAPI Latency: ${Math.round(msg.client.ws.ping)}ms`);
         });
 }
 
@@ -15,4 +15,4 @@ module.exports.run = (CommandStruct, PermStruct) => {
 module.exports.helpText = `Ping, for testing`
 
 // This should be a string. It will be used for general help to list commands by category
-module.exports.Category = `Sample Category`
+module.exports.Category = `Utility`
