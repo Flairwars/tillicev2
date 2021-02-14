@@ -1,13 +1,10 @@
 /** This is a test command to show what command files should look like */
 const Discord = require("discord.js");
-const init = require('../init');
-const client = require('../init').Client;
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
   const teamRoles = ["Single Slash", "Double Slash", "No Slash"];
   const teamPrefixes = ["u/", "/u/", ""];
-  const init = require('../init');
   const client = require('../init').Client;
   let guild = client.guilds.cache.get('809491629207191572');
   let member = guild.member(CommandStruct.message.author);
