@@ -26,9 +26,9 @@ module.exports.GetJoke = async (APIURL) => {
 
 module.exports.getRandomRedditImage = async (Subreddit) => {
     //fetches random image off of specified subreddit
-    const attempsLimit = 20;
+    const attempsLimit = 10;
     let attempts = 0;
-    console.log(Subreddit)
+    console.log("Searching" + Subreddit)
     do {
         const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
         const allowed = post.post_hint === 'image' && !post.over_18;

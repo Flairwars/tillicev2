@@ -6,6 +6,12 @@ let BaseEmbed = () => {
         .setFooter('Tilice v2')
 }
 
+let ErrorEmbed = () => {
+    return new Discord.MessageEmbed()
+        .setColor('#B10c06')
+        .setFooter('Tilice v2')
+        .setImage('https://i.imgur.com/5b3Misq.png')
+}
 
 module.exports.GeneralHelpEmbed = (HelpResponseStruct) => {
     let Embed = BaseEmbed()
@@ -31,8 +37,17 @@ module.exports.SendImageEmbed = (ImageURL, Caption) => {
     return Embed
 }
 
+
 module.exports.SendEmbed = (Title, Text) => {
     let Embed = BaseEmbed()
+    Embed.setTitle(Title)
+    Embed.setDescription(Text)
+    return Embed
+}
+
+
+module.exports.SendErrorEmbed = (Title, Text) => {
+    let Embed = ErrorEmbed()
     Embed.setTitle(Title)
     Embed.setDescription(Text)
     return Embed
