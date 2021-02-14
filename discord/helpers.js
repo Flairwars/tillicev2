@@ -42,3 +42,37 @@ module.exports.getRandomEntry = (collection) => {
     const index = Math.floor(Math.random() * collection.length);
         return collection[index];
 }
+
+// Returns a member object of the mentioned user/by nickname/by user name in that order.
+// If there are no arguments, then it returns the author.
+// Returns null if nothing is found
+module.exports.getGuildMemberFromCommandStruct = (CommandStruct) => {
+    let msg = CommandStruct.message;
+    // If there are no arguments take the author. Otherwise look for a mention
+    let member = (CommandStruct.args.length === 0) ? msg.member : msg.mentions.members.first();
+
+    // If no mention was saved in member
+    if (!member) {
+        // Search through all the nicknames in the guild
+        guildNickMatch = msg.guild.members.cache
+            .filter(m => m.nickname)
+            .find(m => m.nickname.toLowerCase().includes(CommandStruct.args[0].toLowerCase()))
+        member = guildNickMatch;
+
+        // If there's still no member that was found
+        if (!member) {
+            // Find a fitting Discurd user name
+            discordUsernameMatch = msg.guild.members.cache.find(m => m.user.username.toLowerCase().includes(CommandStruct.args[0].toLowerCase()));
+
+            member = discordUsernameMatch;
+
+            // If there is still no member
+            if (!member) {
+                return null;
+            }
+        }
+    }
+
+    return member;
+
+}
