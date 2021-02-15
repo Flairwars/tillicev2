@@ -26,13 +26,25 @@ module.exports.GetJoke = async (APIURL) => {
 
 module.exports.getRandomRedditImage = async (Subreddit) => {
     //fetches random image off of specified subreddit
-    const attempsLimit = 10;
+    const attempsLimit = 16;
     let attempts = 0;
-    console.log("Searching" + Subreddit)
     do {
         const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
         const allowed = post.post_hint === 'image' && !post.over_18;
         if(allowed) return post.url;
+        attempts++;
+    } while (attempts < attempsLimit);
+    return;
+}
+
+module.exports.getRandomRedditPost = async (Subreddit) => {
+    //fetches random post off of specified subreddit
+    const attempsLimit = 16;
+    let attempts = 0;
+    do {
+        const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
+        const allowed = post.post_hint != 'image' && !post.over_18;
+        if(allowed) return post.title;
         attempts++;
     } while (attempts < attempsLimit);
     return;
