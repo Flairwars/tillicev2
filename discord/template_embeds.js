@@ -7,6 +7,14 @@ let BaseEmbed = () => {
 }
 
 
+let ErrorEmbed = () => {
+    return new Discord.MessageEmbed()
+        .setColor('#B10c06')
+        .setFooter('Tilice v2')
+        .setImage('https://i.imgur.com/5b3Misq.png')
+}
+
+
 module.exports.GeneralHelpEmbed = (HelpResponseStruct) => {
     let Embed = BaseEmbed()
     // Use the struct we built to populate an embed
@@ -28,5 +36,21 @@ module.exports.SendImageEmbed = (ImageURL, Caption) => {
     let Embed = BaseEmbed()
     Embed.setImage(ImageURL)
     Embed.setTitle(Caption)
+    return Embed
+}
+
+
+module.exports.SendEmbed = (Title, Text) => {
+    let Embed = BaseEmbed()
+    Embed.setTitle(Title)
+    Embed.setDescription(Text)
+    return Embed
+}
+
+
+module.exports.SendErrorEmbed = (Title, Text) => {
+    let Embed = ErrorEmbed()
+    Embed.setTitle(Title)
+    Embed.setDescription(Text)
     return Embed
 }
