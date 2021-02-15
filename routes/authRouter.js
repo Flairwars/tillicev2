@@ -17,7 +17,7 @@ router.get('/reddit/callback', (req, res) => {
             }
         }
 
-        const Callbackuri = 'http://localhost:5000'
+        const Callbackuri = process.env.HOSTNAME
   
         axios.post('https://www.reddit.com/api/v1/access_token', `grant_type=authorization_code&code=${RedditAccessCode}&redirect_uri=${Callbackuri}/auth/reddit/callback`, RedditAuthHeaders).then( LoginResponse => {
         const RedditApiBaseUrl = 'https://oauth.reddit.com'
@@ -33,19 +33,28 @@ router.get('/reddit/callback', (req, res) => {
                     totalKarma: ApiResponse.data.total_karma,
                     accountCreatedAt: ApiResponse.data.created_utc
                 }
-    
-                FWAPI.UpdateUserRedditName(UserID, RedditInfo.username.split('u/')[1])
-                .then( fwapiRes => {
-                    console.log(fwapiRes.data)
-                })
-                .catch( fwapiErr => {
-                    console.error(fwapiErr.data)
-                })
-    
+
                 const r = require('../reddit/init')
 
                 r.getSubreddit('flairwars').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
                     console.log(flair)
+                    FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
+                        .then( success => {
+                            console.log(success.data)
+                            axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
+                                    color: flair.flair_css_class.toLowerCase(), 
+                                    nickname: RedditInfo.username.split('u/')[1]
+                                })
+                                .then( success => {
+                                    console.log(success)
+                                })
+                                .catch( failure => {
+                                    console.error(failure)
+                                })
+                            res.redirect('/')
+                        }).catch( FwapiErr => {
+                            console.error(FwapiErr.data)
+                        })
                 })
 
             }).catch(redditGetErr => {
