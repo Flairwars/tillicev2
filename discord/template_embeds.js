@@ -6,12 +6,14 @@ let BaseEmbed = () => {
         .setFooter('Tilice v2')
 }
 
+
 let ErrorEmbed = () => {
     return new Discord.MessageEmbed()
         .setColor('#B10c06')
         .setFooter('Tilice v2')
         .setImage('https://i.imgur.com/5b3Misq.png')
 }
+
 
 module.exports.GeneralHelpEmbed = (HelpResponseStruct) => {
     let Embed = BaseEmbed()
