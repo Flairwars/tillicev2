@@ -18,8 +18,8 @@ module.exports.eval = (commandRequredPermissions, PermStruct) => {
     return MeetsRequirements.every(requirement => requirement === true)
 }
 
-// Export Types for ease of use
-module.exports.types = {
+// Export Types for ease of use. Import this file and use <name>.levels.Admin for example
+module.exports.levels = {
     Admin: 'Admin',
     BotManager: 'BotManager'
 }
