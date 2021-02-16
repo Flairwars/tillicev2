@@ -7,3 +7,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Shuts down the bot`
 
 module.exports.Category = `Dev`
+
+module.exports.RequiredPermissions = [Admin, BotManager] 
