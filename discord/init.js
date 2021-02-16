@@ -43,7 +43,7 @@ client.on('message', msg => {
       // If the user is trying to get help...
       console.log(`USER ${msg.member.id} Issued command ${CommandStruct.command}`)
       console.log(`ARGS Captured: ${CommandStruct.args}`)
-      
+
       // General help command issued (i.e. ~help)
       if (CommandStruct.command === 'help' && CommandStruct.args.length === 0) {
         // Use this to temporarily store category/command name data
@@ -52,9 +52,9 @@ client.on('message', msg => {
         // For every command entry in the Command Registry...
         Object.keys(client.CommandRegistry).forEach(command => {
           // If a category has not yet been seen, add it to the reponse struct and initialize an empty array
-          if (!ResponseStruct.hasOwnProperty(client.CommandRegistry[command].Category)) 
+          if (!ResponseStruct.hasOwnProperty(client.CommandRegistry[command].Category))
             ResponseStruct[client.CommandRegistry[command].Category] = []
-          
+
           // Add the command name under the category
           ResponseStruct[client.CommandRegistry[command].Category].push(command)
         })

@@ -3,6 +3,7 @@ const helpers = require('../helpers.js');
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
+    let msg = CommandStruct.message;
     let member = helpers.getGuildMemberFromCommandStruct(CommandStruct);
 
     if (!member) {
