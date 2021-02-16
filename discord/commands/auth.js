@@ -24,7 +24,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
             else {
                 // If they happen to exist but the reddit info is wrong - Can occur depending on how a user is created
                 currentHost = process.env.HOSTNAME
-                const redirect_uri = `http://${currentHost}/auth/reddit/callback`
+                const redirect_uri = `${currentHost}/auth/reddit/callback`
                 // State is a base64 encoded string of user ID
                 const state = Buffer.from(CommandStruct.message.member.id).toString('base64')
                 let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
