@@ -1,5 +1,5 @@
-# tilicev2
-This is the Tilice Bot for FlairWars, rewritten from the ground up
+# tillicev2
+This is the Tillice Bot for FlairWars, rewritten from the ground up
 
 # Setup
 ## Dependencies
