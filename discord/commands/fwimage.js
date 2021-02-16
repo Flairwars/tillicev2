@@ -18,3 +18,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets an image off of r/${subreddit}`
 
 module.exports.Category = `Images`
+
+module.exports.RequiredPermissions = []

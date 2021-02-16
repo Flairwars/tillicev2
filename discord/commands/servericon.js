@@ -8,3 +8,5 @@ module.exports.run = (CommandStruct, PermStruct) => {
 module.exports.helpText = `Get the server icon of the current server`
 
 module.exports.Category = `Utility`
+
+module.exports.RequiredPermissions = []

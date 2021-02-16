@@ -16,3 +16,5 @@ module.exports.helpText = `Ping, for testing`
 
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Utility`
+
+module.exports.RequiredPermissions = []

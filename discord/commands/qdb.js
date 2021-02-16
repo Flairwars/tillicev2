@@ -20,3 +20,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets a random quote from #quote-database`
 
 module.exports.Category = `Fun`
+
+module.exports.RequiredPermissions = []

@@ -30,3 +30,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets statistics for the Discord bot`
 
 module.exports.Category = `Dev`
+
+module.exports.RequiredPermissions = []

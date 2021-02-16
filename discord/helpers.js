@@ -66,7 +66,7 @@ module.exports.getGuildMemberFromCommandStruct = (CommandStruct) => {
     // If no mention was saved in member
     if (!member) {
         // Search through all the nicknames in the guild
-        guildNickMatch = msg.guild.members.cache
+        let guildNickMatch = msg.guild.members.cache
             .filter(m => m.nickname)
             .find(m => m.nickname.toLowerCase().includes(CommandStruct.args[0].toLowerCase()))
         member = guildNickMatch;
@@ -74,7 +74,7 @@ module.exports.getGuildMemberFromCommandStruct = (CommandStruct) => {
         // If there's still no member that was found
         if (!member) {
             // Find a fitting Discurd user name
-            discordUsernameMatch = msg.guild.members.cache.find(m => m.user.username.toLowerCase().includes(CommandStruct.args[0].toLowerCase()));
+            let discordUsernameMatch = msg.guild.members.cache.find(m => m.user.username.toLowerCase().includes(CommandStruct.args[0].toLowerCase()));
 
             member = discordUsernameMatch;
 
