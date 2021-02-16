@@ -77,12 +77,14 @@ client.on('message', msg => {
         // See if we can run the command
         if (client.CommandRegistry.hasOwnProperty(CommandStruct.command)) {
           // If so, eval perms
-          if (perms.eval(client.CommandRegistry[CommandStruct.Command].RequiredPermissions)) {
+          if (perms.eval(client.CommandRegistry[CommandStruct.command].RequiredPermissions, PermStruct)) {
             // User can use it, send
+            console.log(`Permissions check for ${client.CommandRegistry[CommandStruct.command].RequiredPermissions.join(', ')} passed.`)
             client.CommandRegistry[CommandStruct.command].run(CommandStruct, PermStruct)
           }
           else {
             // User can't use it, error
+            console.log(`Permissions check for ${client.CommandRegistry[CommandStruct.command].RequiredPermissions.join(', ')} failed.`)
             msg.channel.send(embeds.SendErrorEmbed('Missing Permissions', 'You don\'t have the required permissions to do that.'))
           }
         }

@@ -19,7 +19,7 @@ module.exports = (msg, guildID, memberID, cb) => {
     // so permissions like that will be saved to the database, and will be retrieved using memberID
 
     PermStruct.Administrator = msg.member.hasPermission('ADMINISTRATOR')
-    PermStruct.BotManager = msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole)
+    PermStruct.BotManager = (msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
 
     cb(PermStruct, CommandStruct)
 }
