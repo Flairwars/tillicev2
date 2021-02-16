@@ -103,3 +103,5 @@ function getLetter(letter) {
         default: return letter;
     }
 }
+
+module.exports.RequiredPermissions = []

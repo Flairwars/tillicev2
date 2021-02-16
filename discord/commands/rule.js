@@ -83,3 +83,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Shows a specified rule from the #rules channel`
 
 module.exports.Category = `Moderating`
+
+module.exports.RequiredPermissions = []

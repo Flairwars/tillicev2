@@ -36,3 +36,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets the flag of a colour`
 
 module.exports.Category = `Utility`
+
+module.exports.RequiredPermissions = []

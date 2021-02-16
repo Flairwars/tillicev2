@@ -10,3 +10,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets an image of a cute fox`
 
 module.exports.Category = `Fun`
+
+module.exports.RequiredPermissions = []

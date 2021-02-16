@@ -7,3 +7,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets all roles that are unused`
 
 module.exports.Category = `Mod`
+
+module.exports.RequiredPermissions = []

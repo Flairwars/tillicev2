@@ -33,3 +33,5 @@ module.exports.helpText = `Used to randomly assign a user to a battle 33 team`
 
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Misc`
+
+module.exports.RequiredPermissions = []

@@ -62,3 +62,5 @@ function parseOptions(msg, text) {
 module.exports.helpText = `Simple and multi-option polls`
 
 module.exports.Category = `Utility`
+
+module.exports.RequiredPermissions = []

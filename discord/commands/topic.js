@@ -23,3 +23,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Gets a topic from any subreddit`
 
 module.exports.Category = `Fun`
+
+module.exports.RequiredPermissions = []

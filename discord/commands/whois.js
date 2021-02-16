@@ -147,3 +147,5 @@ async function buildRedditEmbed(member, redditUser) {
 
     return embed;
 }
+
+module.exports.RequiredPermissions = []

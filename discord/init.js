@@ -5,6 +5,9 @@ const Discord = require('discord.js');
 // Init discord client
 const client = new Discord.Client();
 
+// Permission types and evaluation
+const perms = require('./eval_perms')
+
 // Pull in the struct builder
 const buildStructs = require('./struct_builder')
 
@@ -73,8 +76,17 @@ client.on('message', msg => {
       else {
         // See if we can run the command
         if (client.CommandRegistry.hasOwnProperty(CommandStruct.command)) {
-          // If so, send it
-          client.CommandRegistry[CommandStruct.command].run(CommandStruct, PermStruct)
+          // If so, eval perms
+          if (perms.eval(client.CommandRegistry[CommandStruct.command].RequiredPermissions, PermStruct)) {
+            // User can use it, send
+            console.log(`Permissions check for ${client.CommandRegistry[CommandStruct.command].RequiredPermissions.join(', ')} passed.`)
+            client.CommandRegistry[CommandStruct.command].run(CommandStruct, PermStruct)
+          }
+          else {
+            // User can't use it, error
+            console.log(`Permissions check for ${client.CommandRegistry[CommandStruct.command].RequiredPermissions.join(', ')} failed.`)
+            msg.channel.send(embeds.SendErrorEmbed('Missing Permissions', 'You don\'t have the required permissions to do that.'))
+          }
         }
         else {
           // Send some message about that command not being recognized, or do nothing
