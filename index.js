@@ -65,6 +65,7 @@ io.on('connection', function (socket) {
     socket.emit('ping', 'ping!')
 });
 
+
 // These imports will start the other processes
 const DiscordClient = require('./discord/init')
-// const RedditClient = require('./reddit/init') <= This is not configured at time of committing
+const RedditClient = require('./reddit/init')

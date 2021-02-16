@@ -49,4 +49,4 @@ module.exports.run = (CommandStruct, PermStruct) => {
 module.exports.helpText = `Log in with Reddit to get your Flairwars Color`
 
 // This should be a string. It will be used for general help to list commands by category
-module.exports.Category = `Administration`
+module.exports.Category = `Mod`

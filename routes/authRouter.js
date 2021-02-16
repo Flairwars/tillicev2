@@ -36,6 +36,11 @@ router.get('/reddit/callback', (req, res) => {
 
                 const r = require('../reddit/init')
 
+                // TODO: Check if a user is banned from fw before authing
+                // This is imposible at present because Tillice does not have the permissions for it
+                // regarding feedback in https://github.com/Flairwars/tillicev2/pull/22#discussion_r576494872
+                // r.getSubreddit('flairwars').getBannedUsers({name: RedditInfo.username.split('u/')[1]}).then(console.log)
+
                 r.getSubreddit('flairwars').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
                     console.log(flair)
                     FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
