@@ -8,4 +8,4 @@ module.exports.helpText = `Shuts down the bot`
 
 module.exports.Category = `Dev`
 
-module.exports.RequiredPermissions = [Admin, BotManager] 
+module.exports.RequiredPermissions = ["Admin", "BotManager"]
