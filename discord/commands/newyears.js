@@ -18,7 +18,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             .setFooter(msg.author.id)
             .setTimestamp()
         Embed.addField("Message:", CommandStruct.args.join(' '))
-        client.Client.channels.cache.get('811736656687792128').send(Embed) // 653002441649815571
+        client.Client.channels.cache.get('653002441649815571').send(Embed) // 811736656687792128 for testing
         msg.member.roles.add(role)
         msg.reply("New Year's message sent")
     }
