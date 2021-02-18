@@ -41,9 +41,10 @@ module.exports.getRandomRedditPost = async (Subreddit) => {
     //fetches random post off of specified subreddit
     const attempsLimit = 16;
     let attempts = 0;
+    let bannedWords = ["serious", "nsfw", "sex", "cum", "masturbate", "porn", "nigger", "kike", "spic", "zipperhead", "faggot", "chink", "retard", "dago", "tranny", "paki"]
     do {
         const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
-        const allowed = post.post_hint != 'image' && !post.over_18;
+        const allowed = post.post_hint != 'image' && !post.over_18 && bannedWords.some( word => { ! post.data.title.toLowerCase().includes(word) } ) && post.data.title.length <= 256
         if(allowed) return post.title;
         attempts++;
     } while (attempts < attempsLimit);
