@@ -6,7 +6,7 @@ const guildCfg = require('../guildCfg')
 module.exports.run = (CommandStruct, PermStruct) => {
 
     if (CommandStruct.args.length == 0) {
-        CommandStruct.message.channel.send(embeds.SendErrorEmbed('Invalid arguments', 'Please type use this command in the format `suggest suggestion`'))
+        CommandStruct.message.channel.send(embeds.SendErrorEmbed('Invalid arguments', 'Please use this command in the format `suggest suggestion`'))
     }
     else {
         const suggestion = CommandStruct.args.join(' ')
