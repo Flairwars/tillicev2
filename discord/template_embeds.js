@@ -54,3 +54,47 @@ module.exports.SendErrorEmbed = (Title, Text) => {
     Embed.setDescription(Text)
     return Embed
 }
+
+module.exports.RequestEmbed = (user, type, request) => {
+    let Embed = BaseEmbed()
+    Embed.setTitle(`New ${type} Request`)
+    Embed.setDescription(`From user ${user} requesting ${request}`)
+
+    return Embed
+}
+
+module.exports.ReportEmbed = (reporter, user, reason) => {
+    let Embed = BaseEmbed()
+    Embed.setTitle(`Report Issued by ${reporter}`)
+    Embed.setDescription(`Reporting ${user} for: ${reason}`)
+    return Embed
+}
+
+module.exports.topicSuggestion = (user, suggestion) => {
+    let Embed = BaseEmbed()
+    Embed.setTitle(`Suggestion by ${user}`)
+    Embed.setDescription(suggestion)
+    return Embed
+}
+
+module.exports.SkeletonEmbed = () => {
+    return BaseEmbed()
+}
+
+module.exports.suggestionVotingEmbed = (user, userPfp, suggestion, link) => {
+    let Embed = BaseEmbed()
+    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    .setDescription(suggestion)
+    .setTimestamp()
+    .addField('Talk about it!', `[Jump to discussion](${link})`)
+    return Embed
+}
+
+module.exports.suggestionDiscussionEmbed = (user, userPfp, suggestion, link) => {
+    let Embed = BaseEmbed()
+    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    .setDescription(suggestion)
+    .setTimestamp()
+    .addField('Talk about it!', `[Vote on it](${link})`)
+    return Embed
+}
