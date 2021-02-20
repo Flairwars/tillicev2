@@ -1,10 +1,17 @@
 /** This is a test command to show what command files should look like */
 const Discord = require("discord.js");
 const snoowrap = require("snoowrap");
-
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
-  const client = require('../init').Client;
+  const flairwarsInfo = require('../flairwarsInfo');
+  //const redditClient = require('../reddit/init').redditClient;
+  const redditClient = new snoowrap({
+      userAgent: 'Tilice V2 from r/flairwars',
+      clientId: 'aVjs8i_qY7kUtQ',
+      clientSecret: 'qF5m98criTTNFVynm0f48NUedI0',
+      username: 'Flairwars_bot',
+      password: 'fwbot8855'
+  });
 
   // No arguments passed
   if (CommandStruct.args.length === 0) {
@@ -17,14 +24,15 @@ module.exports.run = (CommandStruct, PermStruct) => {
       return;
   }
 
-  const colours = client.config.colours;
+  //const colours = flairwarsInfo.colours;
+  const colours = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"];
   var colourSubreddit;
 
-  // If the input is a colour (defined in client.config.colours) - excluding mods, for example
+  // If the input is a colour (defined in flairwarsInfo.colours) - excluding mods, for example
   if (colours.some(colour => colour.toLowerCase() === CommandStruct.args[0].toLowerCase())) {
-      colourSubreddit = client.config.flairInfo[CommandStruct.args[0].toLowerCase()].subreddit;
+      colourSubreddit = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].subreddit;
   } else if (CommandStruct.args[0].toLowerCase() === "pink") {
-      colourSubreddit = client.config.flairInfo["orange"].subreddit;
+      colourSubreddit = flairwarsInfo.flairInfo["orange"].subreddit;
 
   // Battle 22 addition
   } else if (CommandStruct.args[0].toLowerCase() === "battle") {
@@ -55,15 +63,15 @@ module.exports.run = (CommandStruct, PermStruct) => {
   text = `\`\`\`yaml\n${colourSubreddit}\`\`\`\n`;
   var msg = CommandStruct.message.channel.send("Counting...");
 
-  const flairs = client.config.flairs;
+  const flairs = flairwarsInfo.flairs;
   const numberOfHotPages = 5;
   // This is an identifier of the last post on the page
   var after = 0;
 
   for (var i = 1; i <= numberOfHotPages; i++) {
-      msg = msg.edit(text + i + ". page, fetching data");
-      const posts = getHotPage(r, colourSubreddit, after);
-      msg = msg.edit(text + i + ". page, verifying user flairs");
+      msg = CommandStruct.message.edit(text + i + ". page, fetching data");
+      const posts = getHotPage(redditClient, colourSubreddit, after);
+      msg = CommandStruct.message.edit(text + i + ". page, verifying user flairs");
 
       // Create an array of post authors from the array of posts
       const authorsPerPage = posts.map(post => post.author.name);
@@ -87,7 +95,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
           flairMap.set(author, flairColour);
       }
 
-      msg = msg.edit(text + i + ". page, mapping users to flairs");
+      msg = CommandStruct.message.edit(text + i + ". page, mapping users to flairs");
       // Remember that array of post authors per hot page? Let's transform it to an array of colour flairs now
       const flairsFromAuthors = authorsPerPage.map(author => flairMap.get(author));
 
@@ -101,13 +109,13 @@ module.exports.run = (CommandStruct, PermStruct) => {
       });
 
       text = text + '\n';
-      msg = msg.edit(text);
+      msg = CommandStruct.message.edit(text);
       // Update the variable which stores the last post to fetch the next hotpage
       after = posts[posts.length - 1].name;
   }
 };
 
-async function getHotPage(r, subreddit, after) {
+async function getHotPage(redditClient, subreddit, after) {
   // Stickied posts are fetched, but don't count toward the 25 posts limit
   // Limit: how many posts; after: the last previous post (after = 0 fetches from the start)
   return r.getSubreddit(subreddit)
