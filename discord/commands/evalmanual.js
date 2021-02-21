@@ -1,5 +1,6 @@
 /** This is a test command to show what command files should look like */
 const Discord = require(`Discord.js`);
+const client = require('../init')
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
       //const flairwarsInfo = require('../flairwarsInfo');
@@ -37,14 +38,17 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
       if (acceptOrReject === "accept" || acceptOrReject === "deny") {
         suggestionPollChannel.messages.fetch(suggestionsID).then(message => {
-          const messageAuthor = message.author.name;
-          const messageAuthorPfp = message.author.iconURL;
-          const messageContent = message.description;
-          const messageTime = message.timestamp;
+          // const messageAuthor = message.author.name;
+          // const messageAuthorPfp = message.author.iconURL;
+          // const messageContent = message.description;
+          // const messageTime = message.timestamp;
 
-          let newPollEmbed = new Discord.MessageEmbed(message.embed)
+          console.log(message.embeds)
+
+          let newPollEmbed = new Discord.MessageEmbed(message.embeds[0])
 
           if (acceptOrReject === "accept") {
+            
             newPollEmbed.setColor(suggestConfig.acceptedColour);
             newPollEmbed.setColor(suggestConfig.acceptedColour);
             newPollEmbed.setFooter(`Suggestion was accepted`);
@@ -54,7 +58,12 @@ module.exports.run = (CommandStruct, PermStruct) => {
             newPollEmbed.setFooter(`Suggestion was rejected`);
           }
 
-          message.edit(newPollEmbed);
+          console.log(newPollEmbed)
+
+          message.edit('', {embed: newPollEmbed}).then( msg => {
+            console.log(msg)
+            console.log(msg.embeds[0])
+          });
           command.react('👌');
         })
       } else {
