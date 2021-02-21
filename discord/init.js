@@ -20,6 +20,9 @@ client.CommandRegistry = {}
 // Get a path to the commands directory
 const normalizedPath = require('path').join(__dirname, "commands")
 
+// TODO: LOAD CONFIG FROM DB
+const GuildPrefix = '~'
+
 // For each file in the commands directory...
 const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
   let extensionlessFilename = file.split('.js')[0]
@@ -34,9 +37,6 @@ const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
 client.on('message', msg => {
   // If the message came from a bot or it's a DM, ignore it.
   if(msg.author.bot || msg.guild === null) return;
-
-  // TODO: LOAD CONFIG FROM DB
-  let GuildPrefix = '~'
 
   if (msg.content.startsWith(GuildPrefix)) {
     buildStructs(msg, msg.guild.id, msg.member.id, (PermStruct, CommandStruct) => {
@@ -99,6 +99,17 @@ client.on('message', msg => {
 
 // Log in the bot
 client.login(process.env.DISCORD_TOKEN);
+
+// Set the status
+client.on("ready", () => {
+    client.user.setPresence({
+        activity: {
+            name: `for ${GuildPrefix}help`,
+            type: 'WATCHING'
+        },
+        status: 'online'
+    })
+})
 
 // Export the client so we can use it elsewhere
 module.exports.Client = client
