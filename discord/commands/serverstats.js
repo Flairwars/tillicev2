@@ -4,7 +4,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message
     const guild = msg.guild
     // Cache the Members
-    guild.members.fetch()
+    await guild.members.fetch()
     const date = guild.createdAt
     var embed = new Discord.MessageEmbed()
         .setAuthor(guild.name, guild.iconURL)
