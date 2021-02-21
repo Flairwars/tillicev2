@@ -1,4 +1,4 @@
-const Discord = require(`Discord.js`);
+const Discord = require(`discord.js`);
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
@@ -43,7 +43,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
           let newPollEmbed = new Discord.MessageEmbed(message.embeds[0])
 
           if (acceptOrReject === "accept") {
-            
+
             newPollEmbed.setColor(suggestConfig.acceptedColour);
             newPollEmbed.setColor(suggestConfig.acceptedColour);
             newPollEmbed.setFooter(`Suggestion was accepted`);
