@@ -1,6 +1,5 @@
-/** This is a test command to show what command files should look like */
 const Discord = require(`Discord.js`);
-const client = require('../init')
+
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
       //const flairwarsInfo = require('../flairwarsInfo');
@@ -38,10 +37,6 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
       if (acceptOrReject === "accept" || acceptOrReject === "deny") {
         suggestionPollChannel.messages.fetch(suggestionsID).then(message => {
-          // const messageAuthor = message.author.name;
-          // const messageAuthorPfp = message.author.iconURL;
-          // const messageContent = message.description;
-          // const messageTime = message.timestamp;
 
           console.log(message.embeds)
 
@@ -70,42 +65,12 @@ module.exports.run = (CommandStruct, PermStruct) => {
           CommandStruct.message.channel.send(acceptOrReject + " Isn't valid. Use accept or deny.")
           return;
       }
-      //if a/d doesn't = a/d then they spelt it wrong so let them know
-
-//      suggestionPollChannel.messages.fetch(suggestionsID).then(message => {
-//        CommandStruct.message.embeds.forEach((embed) => {
-//          const messageAuthor = embed.author.name;
-//          const messageAuthorPfp = embed.author.iconURL;
-//          const messageContent = embed.description;
-//          const messageTime = embed.timestamp;
-//
-//          var newPollEmbed = new RichEmbed()
-//          .setDescription(messageContent)
-//          .setAuthor(messageAuthor, messageAuthorPfp)
-//          .setTimestamp(messageTime)
-//
-//          if (acceptOrReject === "accept") {
-//            newPollEmbed.setColor(suggestConfig.acceptedColour);
-//            newPollEmbed.setColor(suggestConfig.acceptedColour);
-//            newPollEmbed.setFooter(`Suggestion was accepted`);
-//          } else {
-//            newPollEmbed.setColor(suggestConfig.rejectedColour);
-//            newPollEmbed.setColor(suggestConfig.rejectedColour);
-//            newPollEmbed.setFooter(`Suggestion was rejected`);
-//          }
-//
-//          message.edit(newPollEmbed);
-//
-//          command.react('👌');   // :ok_hand:
-//        })
-//      })
-
 }
 
 // This should be a string, it will be used in the detailed help command for a specific command
-module.exports.helpText = `Ping, for testing`
+module.exports.helpText = `Manually evaluate a poll`
 
 // This should be a string. It will be used for general help to list commands by category
-module.exports.Category = `Utility`
+module.exports.Category = `Mod`
 
 module.exports.RequiredPermissions = []
