@@ -93,6 +93,8 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
 
     let after = 0
 
+    CommandStruct.message.channel.send('Just a moment, processing...')
+
     // This creates a 2D array (within PostPerPageData) of the top 5 pages
     for (let i = 0; i < pages; i++) {
         let posts = await GetPage(subreddit, after)
@@ -134,8 +136,6 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
             users: UserCountData
         })
     }
-
-    CommandStruct.message.channel.send('Execution finished.')
     
     let textCount = `**Count for r/${subreddit}**\n`
 
