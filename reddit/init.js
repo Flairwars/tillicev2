@@ -9,4 +9,6 @@ const redditClient = new snoowrap({
     password: process.env.REDDIT_PASSWORD
 })
 
+redditClient.config({ continueAfterRatelimitError: true })
+
 module.exports = redditClient
