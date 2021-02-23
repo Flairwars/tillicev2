@@ -1,17 +1,16 @@
 /** This is a test command to show what command files should look like */
-const Discord = require("discord.js");
-const snoowrap = require("snoowrap");
+const redditClient = require("../../reddit/init");
+const embeds = require('../template_embeds')
+
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
   const flairwarsInfo = require('../flairwarsInfo');
-  //const redditClient = require('../reddit/init').redditClient;
-  const redditClient = new snoowrap({
-      userAgent: 'Tilice V2 from r/flairwars',
-      clientId: 'aVjs8i_qY7kUtQ',
-      clientSecret: 'qF5m98criTTNFVynm0f48NUedI0',
-      username: 'Flairwars_bot',
-      password: 'fwbot8855'
-  });
+  const redditClient = require('../reddit/init');
+
+  const CountableSubs = ['red', 'orange', 'pink', 'yellow', 'blue', 'green', 'purple', // Normal subs/aliases
+                         'fsr', 'flairshootingrange', // shooting range/alias
+                         'oil', // theoilfields
+                         'br', 'bo', 'by', 'bb', 'bg', 'bp'] // battle subs
 
   // No arguments passed
   if (CommandStruct.args.length === 0) {
@@ -19,14 +18,56 @@ module.exports.run = (CommandStruct, PermStruct) => {
       return;
   }
 
-  if (CommandStruct.args[0].startsWith('r/')) {
-      CommandStruct.message.channel.send("Please specify a colour, not a subreddit");
-      return;
+  switch (CommandStruct.args[0]) {
+        case 'red':
+            break;
+
+        case 'orange':
+        case 'pink':
+            break;
+
+        case 'yellow':
+            break;
+
+        case 'green':
+            break;
+
+        case 'blue':
+            break;
+
+        case 'purple':
+            break;
+
+        case 'fsr':
+        case 'flairshootingrange':
+            break;
+
+        case 'oil':
+            break;
+
+        case 'battlered':
+            break;
+
+        case 'battleorange':
+            break;
+            
+        case 'battleyellow':
+            break;
+                
+        case 'battlegreen':
+            break;
+                    
+        case 'battleblue':
+            break;
+                            
+        case 'battlepurple':
+            break;
+        
+        default:
+            CommandStruct.message.channel.send("I can't do counts on that, sorry!");
+            return;
   }
 
-  //const colours = flairwarsInfo.colours;
-  const colours = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"];
-  var colourSubreddit;
 
   // If the input is a colour (defined in flairwarsInfo.colours) - excluding mods, for example
   if (colours.some(colour => colour.toLowerCase() === CommandStruct.args[0].toLowerCase())) {
@@ -118,13 +159,26 @@ module.exports.run = (CommandStruct, PermStruct) => {
 async function getHotPage(redditClient, subreddit, after) {
   // Stickied posts are fetched, but don't count toward the 25 posts limit
   // Limit: how many posts; after: the last previous post (after = 0 fetches from the start)
-  return r.getSubreddit(subreddit)
+  return redditClient.getSubreddit(subreddit)
                       .getHot({ limit: 25, after: after })
                       .filter(post => !post.stickied);
 }
 
+
+let GetPage = (subreddit, after) => {
+    return redditClient.getSubreddit(subreddit)
+                    .getHot({ limit: 25, after: after})
+                    .filter( post => !post.stickied)
+}
+
+let ComposeCount = (subreddit, CommandStruct) => {
+    let after = 0
+
+    CommandStruct.channel.send()
+}
+
 // This should be a string, it will be used in the detailed help command for a specific command
-module.exports.helpText = `Counts number of posts per hot page for the given colour subreddit. 30 seconds global cooldown.`
+module.exports.helpText = `Counts number of posts per hot page for the given colour subreddit.`
 
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Utility`
