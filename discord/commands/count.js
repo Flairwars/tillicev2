@@ -102,7 +102,7 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
         after = posts[posts.length-1].name
     }
 
-    let UserColorMapping = []
+    let UserColorMapping = {}
 
     // This will create the user => color mapping
     for (let i = 0; i < PostPerPageData.length; i++) {
