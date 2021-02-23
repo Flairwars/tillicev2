@@ -150,7 +150,7 @@ module.exports.redditInfoEmbed = (color, username, creationDate, totalKarma, lin
 }
 
 module.exports.CountEmbed = (color, subreddit) => {
-    let Embed = fwFlavoredEmbed(color)
+    let Embed = BaseEmbed()
 
     Embed.setTitle(`Count for ${subreddit}`)
 

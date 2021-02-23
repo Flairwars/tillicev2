@@ -16,49 +16,58 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
   switch (CommandStruct.args[0]) {
         case 'red':
+            ComposeCount('dsrred', CommandStruct, 5)
             break;
 
         case 'orange':
         case 'pink':
-            ComposeCount('orange', 'eternalorange', CommandStruct, 5)
+            ComposeCount('eternalorange', CommandStruct, 5)
             break;
 
         case 'yellow':
+            ComposeCount('yellowonlineunion', CommandStruct, 5)
             break;
 
         case 'green':
+            ComposeCount('thegreenarmy', CommandStruct, 5)
             break;
 
         case 'blue':
+            ComposeCount('azureempire', CommandStruct, 5)
             break;
 
         case 'purple':
+            ComposeCount('purpleimperium', CommandStruct, 5)
             break;
 
         case 'fsr':
         case 'flairshootingrange':
+            ComposeCount('flairshootingrange', CommandStruct, 5)
             break;
 
         case 'oil':
+            ComposeCount('theoilfields', CommandStruct, 5)
             break;
 
-        case 'battlered':
-            break;
+        // Standard Battle Subs - Uncomment and set up when they're made
 
-        case 'battleorange':
-            break;
+        // case 'battlered':
+        //     break;
+
+        // case 'battleorange':
+        //     break;
             
-        case 'battleyellow':
-            break;
+        // case 'battleyellow':
+        //     break;
                 
-        case 'battlegreen':
-            break;
+        // case 'battlegreen':
+        //     break;
                     
-        case 'battleblue':
-            break;
+        // case 'battleblue':
+        //     break;
                             
-        case 'battlepurple':
-            break;
+        // case 'battlepurple':
+        //     break;
         
         default:
             CommandStruct.message.channel.send("I can't do counts on that, sorry!");
@@ -74,64 +83,80 @@ let GetPage = async (subreddit, after) => {
                     .filter( post => !post.stickied)
 }
 
-let ComposeCount = async (color, subreddit, CommandStruct, pages) => {
-    CommandStruct.message.channel.send(embeds.CountEmbed(color, subreddit)).then( countMsg => {
-        for (let i = 0; i < pages; i++) {
-            console.log(`COUNTING PAGE ${i}`)
-            let msgEmbed = countMsg.embeds[0]
-            let after = 0
+let GetUserColor = async (user) => {
+    return await (await redditClient.getSubreddit('flairwars')).getUserFlair(user)
+}
 
+let ComposeCount = async (subreddit, CommandStruct, pages) => {
+
+    let PostPerPageData = []
+
+    let after = 0
+
+    // This creates a 2D array (within PostPerPageData) of the top 5 pages
+    for (let i = 0; i < pages; i++) {
+        let posts = await GetPage(subreddit, after)
+        PostPerPageData.push(posts)
+        after = posts[posts.length-1].name
+    }
+
+
+    // This will create the user => color mapping
+    for (let i = 0; i < PostPerPageData.length; i++) {
+        // console.log(PostPerPageData[i])
+        for (let j = 0; j < PostPerPageData[i].length; j++) {
+            let post = PostPerPageData[i][j]
+            if (! UserColorMapping.hasOwnProperty(post.author.name)) {
+                let UserColor = await GetUserColor(post.author.name)
+                UserColorMapping[post.author.name] = UserColor.flair_css_class
+            }
+        }
+    }
+
+    let CountDataPerPage = []
+
+    for (let i = 0; i < PostPerPageData.length; i++) {
+        // console.log(PostPerPageData[i])
+        let ColorCountData = {}
+        let UserCountData = {}
+        for (let j = 0; j < PostPerPageData[i].length; j++) {
+            let post = PostPerPageData[i][j]
             
-            GetPage(subreddit, after).then( posts => {
-                console.log(after)
-                let authors = posts.map(post => post.author.name)
-                let uniqueAuthors = [...new Set(authors)]
-                let colorObj = {}
-                uniqueAuthors.forEach(author => {
-                    // TODO: Will first attempt to get user color from API
-                    redditClient.getSubreddit('flairwars').getUserFlair(author).then(flair => {
-                        let flairColor = flair.flair_css_class
-                        colorObj[author] = flairColor
-                    }).catch( snoowrapErr => console.error(snoowrapErr))
-                }) 
 
-                console.log(colorObj)
+            if (! ColorCountData.hasOwnProperty(UserColorMapping[post.author.name])) ColorCountData[UserColorMapping[post.author.name]] = 0
+            ColorCountData[UserColorMapping[post.author.name]] += 1
+            if (! UserCountData.hasOwnProperty(post.author.name)) UserCountData[post.author.name] = 0
+            UserCountData[post.author.name] += 1
+        }
+        CountDataPerPage.push({
+            page: i+1,
+            color: ColorCountData,
+            users: UserCountData
+        })
+    }
 
-                let embedFieldTitle = `Page ${i+1} Count`
-                let CountData = {
-                    color: {},
-                    users: {}
-                }
+    CommandStruct.message.channel.send('Execution finished.')
+    
+    let textCount = `**Count for r/${subreddit}**\n`
 
-                posts.forEach( post => {
-                    if (!CountData.users.hasOwnProperty(post.author.name)) CountData.users[post.author.name] = 0
-                    CountData.users[post.author.name] += 1
-                    if (!CountData.color.hasOwnProperty(colorObj[post.author.name])) CountData.color[colorObj[post.author.name]] = 0
-                    CountData.color[colorObj[post.author.name]] += 1
-                })
+    for (let i = 0; i < CountDataPerPage.length; i++) {
+        let PageData = CountDataPerPage[i]
+        textCount += `\n**__Page ${PageData.page}:__**\n`
+        Object.keys(PageData.color).forEach( color => {
+            textCount += `> **${color.charAt(0).toUpperCase()+color.slice(1)}**: ${PageData.color[color]}\n`
+        })
 
-                console.log(CountData)
+        textCount += '\n'
 
-                let EmbedFieldText = '**Color Counts**'
-
-                Object.keys(CountData.color).forEach( fwColor => {
-                    EmbedFieldText += `${fwColor}: ${CountData.color[fwColor]}/25\n`
-                })
-
-                EmbedFieldText += '\n**User Counts**\n'
-
-                Object.keys(CountData.users).forEach( user => {
-                    EmbedFieldText += `${user}: ${CountData.users[user]} posts\n`
-                })
-
-                msgEmbed.addField(embedFieldTitle, EmbedFieldText)
-
-                countMsg.edit('', {embed: msgEmbed})
-
-                after = posts[posts.length-1].name
+        if (CommandStruct.args[1] === 'users') {
+            textCount += `__User Counts:__\n`
+            Object.keys(PageData.users).forEach( user => {
+                textCount += `> ${user}: ${PageData.users[user]}\n`
             })
         }
-    })
+    }
+
+    CommandStruct.message.channel.send(textCount)
 }
 
 // This should be a string, it will be used in the detailed help command for a specific command
