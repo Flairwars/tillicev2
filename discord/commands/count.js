@@ -56,19 +56,19 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
         // case 'battleorange':
         //     break;
-            
+
         // case 'battleyellow':
         //     break;
-                
+
         // case 'battlegreen':
         //     break;
-                    
+
         // case 'battleblue':
         //     break;
-                            
+
         // case 'battlepurple':
         //     break;
-        
+
         default:
             CommandStruct.message.channel.send("I can't do counts on that, sorry!");
             return;
@@ -102,6 +102,7 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
         after = posts[posts.length-1].name
     }
 
+    let UserColorMapping = {}
 
     // This will create the user => color mapping
     for (let i = 0; i < PostPerPageData.length; i++) {
@@ -123,7 +124,7 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
         let UserCountData = {}
         for (let j = 0; j < PostPerPageData[i].length; j++) {
             let post = PostPerPageData[i][j]
-            
+
 
             if (! ColorCountData.hasOwnProperty(UserColorMapping[post.author.name])) ColorCountData[UserColorMapping[post.author.name]] = 0
             ColorCountData[UserColorMapping[post.author.name]] += 1
@@ -136,7 +137,7 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
             users: UserCountData
         })
     }
-    
+
     let textCount = `**Count for r/${subreddit}**\n`
 
     for (let i = 0; i < CountDataPerPage.length; i++) {
