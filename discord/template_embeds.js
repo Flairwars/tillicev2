@@ -148,3 +148,11 @@ module.exports.redditInfoEmbed = (color, username, creationDate, totalKarma, lin
     Embed.addField('Karma Breakdown', `Post karma: ${linkKarma}\nComment Karma: ${commentKarma}\nAwarder Karma: ${awarderKarma}\nAwardee Karma: ${awardeeKarma}`)
     return Embed
 }
+
+module.exports.CountEmbed = (color, subreddit) => {
+    let Embed = fwFlavoredEmbed(color)
+
+    Embed.setTitle(`Count for ${subreddit}`)
+
+    return Embed
+}
