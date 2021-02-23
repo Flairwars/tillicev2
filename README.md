@@ -29,6 +29,12 @@ This is the Username for the account holding the Reddit App
 ### REDDIT_PASSWORD
 This is the Password for the account holding the Reddit App
 
+### FWAPI_SECRET
+The secret used for making requests to the FlairWars API
+
+### HOSTNAME
+The host name
+
 ## Project Structure
 
 ### /db

@@ -12,3 +12,5 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 module.exports.helpText = `Snaps or spares the mentioned user`
 
 module.exports.Category = `Fun`
+
+module.exports.RequiredPermissions = []

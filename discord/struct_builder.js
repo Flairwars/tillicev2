@@ -2,6 +2,7 @@
  * are parsed
  */
 
+const MinimodRole = '475076640834191360'
 
 module.exports = (msg, guildID, memberID, cb) => {
     const PermStruct = {} // This will be passed along with all permission info
@@ -16,6 +17,9 @@ module.exports = (msg, guildID, memberID, cb) => {
     // TODO: Build Permission data into PermStruct. It should pull user data from the DB for
     // users who are minimods/mods and let them do certain things in any server that tilice is in,
     // so permissions like that will be saved to the database, and will be retrieved using memberID
+
+    PermStruct.Administrator = msg.member.hasPermission('ADMINISTRATOR')
+    PermStruct.BotManager = (msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
 
     cb(PermStruct, CommandStruct)
 }

@@ -27,3 +27,5 @@ module.exports.helpText = `Reloads a command`
 
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Dev`
+
+module.exports.RequiredPermissions = []
