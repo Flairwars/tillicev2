@@ -36,7 +36,12 @@ const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
 // Message Event Listener
 client.on('message', msg => {
   // If the message came from a bot or it's a DM, ignore it.
-  if(msg.author.bot || msg.guild === null) return;
+  if(msg.author.bot) return;
+  if (msg.guild === null) { // The bot got a message from a DM
+    client.channels.cache.get('485223000875204618').send( // Sends to #void-general, as per current functionality
+      embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)
+    )
+  }
 
   if (msg.content.startsWith(GuildPrefix)) {
     buildStructs(msg, msg.guild.id, msg.member.id, (PermStruct, CommandStruct) => {
