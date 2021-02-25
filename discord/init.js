@@ -20,6 +20,10 @@ client.CommandRegistry = {}
 // Get a path to the commands directory
 const normalizedPath = require('path').join(__dirname, "commands")
 
+// Import config
+// TODO: Move this to db
+const guildCfg = require('./guildCfg');
+
 // TODO: LOAD CONFIG FROM DB
 const GuildPrefix = '~'
 
@@ -33,17 +37,44 @@ const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
   console.log(`Loaded command from ${file}`)
 })
 
+let SlowmodeFilter = (msg) => {
+  if (guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id).length > 0) {
+    let channel = guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id)[0]
+    
+    let slowmodeTimePeriod = new Date( new Date().getTime() - channel.rate*1000 )
+    let slowmodeViolation = msg.channel.messages.cache.find(filteredMessages => {
+      return (filteredMessages.createdAt > slowmodeTimePeriod && filteredMessages.author === msg.author)
+    })
+
+    if (slowmodeViolation && slowmodeViolation !== msg) {
+      let timeRemaining = () => {
+        let diff = slowmodeViolation.createdAt.getTime() - slowmodeTimePeriod.getTime()
+        return `${diff/1000} seconds`
+      }
+      msg.author.send(`Sorry, but you sent a message in that channel recently and it's slowmoded! Here it is so you can try again in ${timeRemaining()}:\n${msg.content}`)
+      msg.delete()
+      return true
+    }
+    else return false
+  }
+  else return false
+}
+
 // Message Event Listener
 client.on('message', msg => {
   // If the message came from a bot or it's a DM, ignore it.
   if(msg.author.bot) return;
-  if (msg.guild === null) { // The bot got a message from a DM
-    client.channels.cache.get('485223000875204618').send( // Sends to #void-general, as per current functionality
+  else if (msg.guild === null) { // The bot got a message from a DM
+    client.channels.cache.get('814393129599893547').send( // #void-general ID 485223000875204618
       embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)
     )
   }
 
-  if (msg.content.startsWith(GuildPrefix)) {
+  else if (SlowmodeFilter(msg)) {
+    console.log('A message was deleted by the Slowmode Filter')
+  }
+
+  else if (msg.content.startsWith(GuildPrefix)) {
     buildStructs(msg, msg.guild.id, msg.member.id, (PermStruct, CommandStruct) => {
       // If the user is trying to get help...
       console.log(`USER ${msg.member.id} Issued command ${CommandStruct.command}`)
@@ -99,6 +130,8 @@ client.on('message', msg => {
       }
     })
   }
+
+  
 
 })
 
