@@ -70,7 +70,13 @@ client.on('message', msg => {
     )
   }
 
-  else if (SlowmodeFilter(msg)) {
+  else if (
+    (
+      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') || 
+      !msg.member.permissions.has('ADMINISTRATOR')
+    ) && 
+    SlowmodeFilter(msg)
+    ) {
     console.log('A message was deleted by the Slowmode Filter')
   }
 
@@ -130,8 +136,6 @@ client.on('message', msg => {
       }
     })
   }
-
-  
 
 })
 
