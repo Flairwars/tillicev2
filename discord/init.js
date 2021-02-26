@@ -65,7 +65,7 @@ client.on('message', msg => {
   // If the message came from a bot or it's a DM, ignore it.
   if(msg.author.bot) return;
   else if (msg.guild === null) { // The bot got a message from a DM
-    client.channels.cache.get('814393129599893547').send( // #void-general ID 485223000875204618
+    client.channels.cache.get('485223000875204618').send( // #void-general ID 485223000875204618
       embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)
     )
   }
