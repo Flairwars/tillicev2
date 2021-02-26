@@ -52,11 +52,12 @@ router.get('/reddit/callback', (req, res) => {
                                 })
                                 .then( success => {
                                     console.log(success)
+                                    res.redirect('/')
                                 })
                                 .catch( failure => {
                                     console.error(failure)
+                                    res.redirect('/')
                                 })
-                            res.redirect('/')
                         }).catch( FwapiErr => {
                             console.error(FwapiErr.data)
                         })
