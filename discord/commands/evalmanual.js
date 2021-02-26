@@ -55,10 +55,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
           console.log(newPollEmbed)
 
-          message.edit('', {embed: newPollEmbed}).then( msg => {
-            console.log(msg)
-            console.log(msg.embeds[0])
-          });
+          message.edit('', {embed: newPollEmbed})
           command.react('👌');
         })
       } else {
