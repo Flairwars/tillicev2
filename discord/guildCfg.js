@@ -16,3 +16,6 @@ module.exports.slowmodedChannels = [
     }
 ]
 
+module.exports.pollChannelId = "811781298876055562"
+module.exports.modPollChannelId = "814873399967875072"
+
