@@ -2,7 +2,11 @@
 const Discord = require("discord.js");
 
 // The run function should ALWAYS take CommandStruct and PermStruct
-module.exports.run = (CommandStruct, PermStruct) => {
+module.exports.run = async (CommandStruct, PermStruct) => {
+
+  await CommandStruct.message.guild.roles.fetch()
+  await CommandStruct.message.guild.members.fetch()
+
   let totemBots = CommandStruct.message.guild.roles.cache
                                       .find(role => role.name === "Totem")
                                       .members.filter(member => member.user.bot);

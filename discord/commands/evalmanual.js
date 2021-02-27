@@ -13,7 +13,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
       //const suggestConfig = client.config.suggestions;
       const suggestConfig = {
           "discussionChannelID": '479768552534966286',
-          "pollChannelID": '811781298876055562', // Megaserver pollChannelID = 482269113389940737
+          "pollChannelID": '482269113389940737', // Megaserver pollChannelID = 482269113389940737
           "modPollChannelID": '531511366855688222',
           "votesToPass": 20,
           "defaultColour": "#C9DDFF",
