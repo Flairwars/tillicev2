@@ -12,7 +12,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     } else if (CommandStruct.args[0].toLowerCase() === "tillice") {
         let TopicText = await helpers.getNormalTopic()
         msg.reply(embeds.SendEmbed(TopicText, `A topic from tillice`))
-    } else if (! AllowedSubs.some(subreddit => args.toLowerCase() === subreddit)) {
+    } else if (! AllowedSubs.includes(CommandStruct.args[0].toLowerCase()) ) {
         msg.reply('Sorry, that subreddit isn\'t allowed')
     } else {
         const subreddit = CommandStruct.args[0].toLowerCase()
