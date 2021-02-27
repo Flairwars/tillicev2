@@ -17,7 +17,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
                 let awardeeKarma = thisUser.awardee_karma
                 let username = `/u/${thisUser.name}`
 
-                r.getSubreddit('flairwars').getUserFlair(thisUser.name).then( userFlair => {s
+                r.getSubreddit('flairwars').getUserFlair(thisUser.name).then( userFlair => {
 
                     CommandStruct.message.channel.send(
                         embeds.redditInfoEmbed(
