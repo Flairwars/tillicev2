@@ -6,7 +6,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
   const teamRoles = ["Single Slash", "Double Slash", "No Slash"];
   const teamPrefixes = ["u/", "/u/", ""];
   const client = require('../init').Client;
-  let guild = client.guilds.cache.get('809491629207191572');
+  let guild = client.guilds.cache.get('463794005231271976');
   let member = guild.member(CommandStruct.message.author);
   let userNick = member ? member.displayName : null;
   let finalNick = userNick.substring(3);
