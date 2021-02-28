@@ -13,7 +13,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         let TopicText = await helpers.getNormalTopic()
         msg.reply(embeds.SendEmbed(TopicText, `A topic from tillice`))
     } else if (! AllowedSubs.includes(CommandStruct.args[0].toLowerCase()) ) {
-        msg.reply("Sorry, that subreddit isn\'t allowed, try 'tillice' for the built-in list, or ${AllowedSubs.toString()}")
+        msg.reply(`Sorry, that subreddit isn\'t allowed, try 'tillice' for the built-in list, or ${AllowedSubs.join(', ')}`)
     } else {
         const subreddit = CommandStruct.args[0].toLowerCase()
         const TopicText = await helpers.getRandomRedditPost(subreddit)
