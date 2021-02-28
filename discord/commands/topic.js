@@ -7,7 +7,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     const AllowedSubs = ['askreddit', 'writingprompts', 'trueaskreddit']
 
     if (CommandStruct.args.length === 0) {
-        msg.reply("You need to specify a subreddit")
+        msg.reply(`Sorry, that subreddit isn\'t allowed, try 'tillice' for the built-in list, or ${AllowedSubs.join(', ')}`)
         return
     } else if (CommandStruct.args[0].toLowerCase() === "tillice") {
         let TopicText = await helpers.getNormalTopic()
