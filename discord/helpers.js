@@ -90,8 +90,7 @@ module.exports.getGuildMemberFromCommandStruct = (CommandStruct) => {
 
 }
 
-module.exports.getNormalTopic = async () => {
-    let replies = [
+const replies = [
             "What is the best thing about your colour?",
             "What is the current colour ranking right now in your opinion, and why?",
             "What's your earliest memory of Flairwars?",
@@ -293,7 +292,7 @@ module.exports.getNormalTopic = async () => {
             "How would your live be different if you could fly?",
             "If you could bring any fictional character into the real world, who would it be and why?",
             "If you could meet anyone from Flairwars in real life, who would it be and why?",
-            " If you could have any job, (regardless of training), which job would you like any why?",
+            "If you could have any job, (regardless of training), which job would you like any why?",
             "What has been your favourite Flairwars battle so far and why?",
             "What's your biggest pet peeve and why?",
             "If I gave you a million dollars, what would you spend it on and why?",
@@ -319,6 +318,12 @@ module.exports.getNormalTopic = async () => {
             "Which season is best?",
             "What would be your last meal?"
         ]
+
+module.exports.getNormalTopic = async () => {
     let result = Math.floor((Math.random() * replies.length))
     return replies[result]
+}
+
+module.exports.getTopicListLength = async () => {
+    return replies.length
 }
