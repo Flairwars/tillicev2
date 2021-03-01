@@ -177,7 +177,7 @@ module.exports.getNormalTopic = async () => {
             "Wats or dogs? Why?",
             "If you could live with any member of Flairwars for one day, who would it be and why?",
             "What is the weirdest (SFW) thing you've eaten or seen someone eat?",
-            "Where is somewhere everyone seems to want to that you really don't or that really sucks, and why do you disagree?",
+            "Where is a place everyone seems to want to travel to that you think is not worth their time?",
             "If you were one of the last two humans alive on Earth, how would you find the other person?",
             "What the worst thing you've ever done that you don't regret?",
             "If you were a character from a game, what would you be like?",
