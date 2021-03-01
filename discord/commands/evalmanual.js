@@ -1,4 +1,5 @@
 const Discord = require(`discord.js`);
+const perms = require('../eval_perms');
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
@@ -70,4 +71,4 @@ module.exports.helpText = `Manually evaluate a poll`
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Mod`
 
-module.exports.RequiredPermissions = []
+module.exports.RequiredPermissions = [perms.levels.Admin]
