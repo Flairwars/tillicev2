@@ -6,7 +6,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 
     const AllowedSubs = ['askreddit', 'writingprompts', 'trueaskreddit']
 
-    if (CommandStruct.args[0].toLowerCase() === "tillice" || CommandStruct.args.length === 0) {
+    if ((CommandStruct.args[0].toLowerCase() === "tillice") || (CommandStruct.args.length === 0)) {
         let TopicText = await helpers.getNormalTopic()
         msg.reply(embeds.SendEmbed(TopicText, `A topic from tillice`))
     } else if (! AllowedSubs.includes(CommandStruct.args[0].toLowerCase()) ) {
