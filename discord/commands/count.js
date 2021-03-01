@@ -54,11 +54,11 @@ module.exports.run = (CommandStruct, PermStruct) => {
             break;
 
         case 'singleslash':
-            ComposeCount('fwbattlesuba', CommandStruct, 5)  
+            ComposeCount('fwbattlesubb', CommandStruct, 5)  
             break;
         
         case 'noslash':
-            ComposeCount('fwbattlesuba', CommandStruct, 5)
+            ComposeCount('fwbattlesubc', CommandStruct, 5)
             break;
         // Standard Battle Subs - Uncomment and set up when they're made
 
