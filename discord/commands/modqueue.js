@@ -16,6 +16,12 @@ module.exports.run = (CommandStruct, PermStruct) => {
   CommandStruct.message.channel.send(modqueueRequest);
   const modQueue = CommandStruct.message.guild.channels.cache.get('744768964630020136');
   modQueue.send(modqueueRequest);
+
+  try {
+    CommandStruct.message.delete();
+  } catch(err) {
+    return;
+  }
 }
 
 // This should be a string, it will be used in the detailed help command for a specific command
