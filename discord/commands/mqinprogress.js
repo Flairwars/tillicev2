@@ -31,4 +31,4 @@ module.exports.helpText = `Used to mark a modqueue request as in progress`
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Mod`
 
-module.exports.RequiredPermissions = [perms.levels.Admin]
+module.exports.RequiredPermissions = ['BotManager']
