@@ -17,7 +17,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     } else if (CommandStruct.args[0].toLowerCase() == "green") {
         flag = "https://i.imgur.com/MNKwjES.jpg"
     } else if (CommandStruct.args[0].toLowerCase() == "blue") {
-        flag = "https://i.imgur.com/IymoMsy.png"
+        flag = "https://i.imgur.com/tmFG3VI.png"
     } else if (CommandStruct.args[0].toLowerCase() == "purple") {
         flag = "https://i.imgur.com/rZFSCIP.jpg"
     } else if (CommandStruct.args[0].toLowerCase() == "oil" || CommandStruct.args[0].toLowerCase() == "mod") {

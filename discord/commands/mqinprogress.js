@@ -5,8 +5,9 @@ const perms = require('../eval_perms');
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
   if(!CommandStruct.args[0]) return CommandStruct.message.reply("You haven't specified a valid message ID");
-  const modQueue = CommandStruct.message.guild.channels.cache.get('703431121857282108');
+  const modQueue = CommandStruct.message.guild.channels.cache.get('703431121857282108'); //Megaserver #modqueue ID: 703431121857282108
   let usrMsg = CommandStruct.message;
+  CommandStruct.message.delete();
 
   modQueue.messages.fetch(CommandStruct.args[0]).then(message => {
 
@@ -14,14 +15,14 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
     .setColor('dea305')
     .setTimestamp()
-    .setFooter('Request In Progress: ');
+    .setFooter(`Request Marked In Progress By ${usrMsg.author.tag}: `);
 
     message.edit('', {embed: newMQEmbed});
-    usrMsg.reply("Request has been marked as in progress!");
+    usrMsg.channel.send("Request has been marked as in progress!").then(msg => msg.delete({timeout: 6000}));
     //const modQueue = CommandStruct.message.guild.channels.cache.get('815937228680200203');
     //modQueue.edit('', {embed: newMQEmbed});
   }).catch(err => {
-    return usrMsg.reply("I couldn't find any messages in the modqueue channel with that message ID");
+    return usrMsg.channel.send("I couldn't find any messages in the modqueue channel with that message ID").then(msg => msg.delete({timeout: 6000}));
   })
 }
 
