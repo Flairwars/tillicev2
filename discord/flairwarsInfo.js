@@ -37,7 +37,7 @@ const info = {
 
       "green": { name: "Green", colourHex: "#3ACE04", iconUrl: "https://i.imgur.com/MNKwjES.jpg", squareIconUrl: "https://i.imgur.com/snuQd1y.jpg", "serverInvite": "https://discord.gg/4HH6D64", subreddit: "TheGreenArmy"},
 
-      "blue": { name: "Blue", colourHex: "#213AEF", iconUrl: "https://i.imgur.com/IymoMsy.png", squareIconUrl: "https://i.imgur.com/JTun9uC.jpg", "serverInvite": "https://discord.gg/W7rnJJQ", subreddit: "AzureEmpire"},
+      "blue": { name: "Blue", colourHex: "#213AEF", iconUrl: "https://i.imgur.com/tmFG3VI.png", squareIconUrl: "https://i.imgur.com/EN1y1I3.png", "serverInvite": "https://discord.gg/W7rnJJQ", subreddit: "AzureEmpire"},
 
       "purple": { name: "Purple", colourHex: "#AF0ECC", iconUrl: "https://i.imgur.com/rZFSCIP.jpg", squareIconUrl: "https://i.imgur.com/a0yMVjz.jpg", "serverInvite": "https://discord.gg/MnsDKcc", subreddit: "PurpleImperium"},
 
