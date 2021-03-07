@@ -37,10 +37,10 @@ const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
   console.log(`Loaded command from ${file}`)
 })
 
-let SlowmodeFilter = (msg) => {
+let SlowmodeFilter = async (msg) => {
   if (guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id).length > 0) {
     let channel = guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id)[0]
-    
+
     let slowmodeTimePeriod = new Date( new Date().getTime() - channel.rate*1000 )
     let slowmodeViolation = msg.channel.messages.cache.find(filteredMessages => {
       return (filteredMessages.createdAt > slowmodeTimePeriod && filteredMessages.author === msg.author)
@@ -52,7 +52,7 @@ let SlowmodeFilter = (msg) => {
         return `${diff/1000} seconds`
       }
       msg.author.send(`Sorry, but you sent a message in that channel recently and it's slowmoded! Here it is so you can try again in ${timeRemaining()}:\n${msg.content}`)
-      msg.delete()
+      await msg.delete()
       return true
     }
     else return false
@@ -72,9 +72,9 @@ client.on('message', msg => {
 
   else if (
     (
-      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') || 
+      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') ||
       !msg.member.permissions.has('ADMINISTRATOR')
-    ) && 
+    ) &&
     SlowmodeFilter(msg)
     ) {
     console.log('A message was deleted by the Slowmode Filter')
