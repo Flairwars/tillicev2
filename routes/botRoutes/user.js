@@ -39,7 +39,7 @@ router.put('/:userId', (req, res) => {
 
         modifiedUser.roles.add(ColorRole)
         modifiedUser.setNickname(`/u/${req.body.nickname}`)
-        ColorChannel.send(`Welcome to ${req.body.color}, <@${req.params.userId}>`)
+        ColorChannel.send(`Welcome to ${req.body.color}, <@${req.params.userId}>\n<@574972919365632010>`)
     }
 })
 
