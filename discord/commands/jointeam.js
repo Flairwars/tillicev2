@@ -40,7 +40,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
   .addField(teamRoles[choice].toUpperCase(), "This action is irreversable")
   .setColor("#0cca00")
   CommandStruct.message.channel.send(acceptEmbed);
-  let assignedRole = CommandStruct.message.guild.roles.cache.find(role => role.name === teamRoles[choice-1]);
+  let assignedRole = CommandStruct.message.guild.roles.cache.find(role => role.name === teamRoles[choice]);
   if(assignedRole) CommandStruct.message.member.roles.add(assignedRole.id);
   CommandStruct.message.member.setNickname(teamPrefixes[choice] + userNick);
 }
