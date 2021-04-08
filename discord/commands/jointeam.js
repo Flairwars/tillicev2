@@ -2,8 +2,8 @@
 const Discord = require("discord.js");
 
 // The run function should ALWAYS take CommandStruct and PermStruct
-module.exports.run = (CommandStruct, PermStruct) => {
-
+module.exports.run = async (CommandStruct, PermStruct) => {
+  await CommmandStruct.message.guild.roles.fetch()
   const teamRoles = ["single slash", "double slash", "no slash"];
   const teamPrefixes = ["u/", "/u/", ""];
   const client = require('../init').Client;
