@@ -3,8 +3,10 @@ const Discord = require("discord.js");
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = async (CommandStruct, PermStruct) => {
-  await CommmandStruct.message.guild.roles.fetch()
+
+  await CommandStruct.message.guild.roles.fetch()
   const teamRoles = ["single slash", "double slash", "no slash"];
+
   const teamPrefixes = ["u/", "/u/", ""];
   const client = require('../init').Client;
   let guild = client.guilds.cache.get('463794005231271976'); // MEGASERVER : 463794005231271976 // BOT-TESTING GUILD : 809491629207191572
