@@ -6,14 +6,11 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 
     const AllowedSubs = ['askreddit', 'writingprompts', 'trueaskreddit']
 
-    if (CommandStruct.args.length === 0) {
-        msg.reply("You need to specify a subreddit")
-        return
-    } else if (CommandStruct.args[0].toLowerCase() === "tillice") {
+    if ((CommandStruct.args[0] === undefined) || (CommandStruct.args[0].toLowerCase() === "tillice")) {
         let TopicText = await helpers.getNormalTopic()
         msg.reply(embeds.SendEmbed(TopicText, `A topic from tillice`))
     } else if (! AllowedSubs.includes(CommandStruct.args[0].toLowerCase()) ) {
-        msg.reply('Sorry, that subreddit isn\'t allowed')
+        msg.reply(`Sorry, that subreddit isn\'t allowed, try 'tillice' for the built-in list, or ${AllowedSubs.join(', ')}`)
     } else {
         const subreddit = CommandStruct.args[0].toLowerCase()
         const TopicText = await helpers.getRandomRedditPost(subreddit)
