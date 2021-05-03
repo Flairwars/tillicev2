@@ -33,8 +33,8 @@ module.exports.CreateUserIDOnly = (memberID) => {
 module.exports.CreateFullUser = (memberID, redditUsername, fwColor) => {
     return axios.post(BaseURL+'/users', {
         DiscordMemberID: memberID,
-        FlairwarsColor: redditUsername,
-        RedditUsername: fwColor
+        FlairwarsColor: fwColor,
+        RedditUsername: redditUsername
     }, {
         headers: AuthHeader
     })

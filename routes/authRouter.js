@@ -43,23 +43,23 @@ router.get('/reddit/callback', (req, res) => {
 
                 r.getSubreddit('flairwars').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
                     console.log(flair)
-                    // FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
-                    //     .then( success => {
-                    console.log(success.data)
-                    axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
-                            color: flair.flair_css_class.toLowerCase(), 
-                            nickname: RedditInfo.username.split('u/')[1]
-                        })
+                    FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
                         .then( success => {
-                            console.log(success)
+                            console.log(success.data)
+                            axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
+                                    color: flair.flair_css_class.toLowerCase(), 
+                                    nickname: RedditInfo.username.split('u/')[1]
+                                })
+                                .then( success => {
+                                    console.log(success)
+                                })
+                                .catch( failure => {
+                                    console.error(failure)
+                                })
+                                res.redirect('/')
+                        }).catch( FwapiErr => {
+                            console.error(FwapiErr.data)
                         })
-                        .catch( failure => {
-                            console.error(failure)
-                        })
-                    res.redirect('/')
-                        // }).catch( FwapiErr => {
-                        //     console.error(FwapiErr.data)
-                        // })
 
                 })
 
