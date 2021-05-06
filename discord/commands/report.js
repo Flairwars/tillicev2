@@ -11,7 +11,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
     else {
         const reportedUser = CommandStruct.args[0]
         const reason = CommandStruct.args.slice(1, CommandStruct.args.length).join(' ')
-        CommandStruct.message.guild.channels.cache.get(guildCfg.reportsChannel).send(embeds.ReportEmbed(`${CommandStruct.message.member.displayName}`, reportedUser, reason))
+        CommandStruct.message.guild.channels.cache.get(guildCfg.reportsChannel).send(`<@&463796140509495296> <@&475076640834191360>`, embeds.ReportEmbed(`${CommandStruct.message.member.displayName}`, reportedUser, reason))
     }
 }
 
