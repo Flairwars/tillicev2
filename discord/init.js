@@ -40,7 +40,7 @@ const fs = require('fs').readdirSync(normalizedPath).forEach( file => {
 let SlowmodeFilter = (msg) => {
   if (guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id).length > 0) {
     let channel = guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id)[0]
-    
+
     let slowmodeTimePeriod = new Date( new Date().getTime() - channel.rate*1000 )
     let slowmodeViolation = msg.channel.messages.cache.find(filteredMessages => {
       return (filteredMessages.createdAt > slowmodeTimePeriod && filteredMessages.author === msg.author)
@@ -62,6 +62,17 @@ let SlowmodeFilter = (msg) => {
 
 // Message Event Listener
 client.on('message', msg => {
+  // plorn reactions
+  if (msg.content.toLowerCase().includes("plorn")) {
+      msg.react("😳");
+      msg.react("✈️");
+  }
+
+  // ping reactions
+  if (msg.mentions.has(client.user)) {
+      msg.react("541887773729226763");
+  }
+
   // If the message came from a bot or it's a DM, ignore it.
   if(msg.author.bot) return;
   else if (msg.guild === null) { // The bot got a message from a DM
@@ -72,9 +83,9 @@ client.on('message', msg => {
 
   else if (
     (
-      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') || 
+      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') ||
       !msg.member.permissions.has('ADMINISTRATOR')
-    ) && 
+    ) &&
     SlowmodeFilter(msg)
     ) {
     console.log('A message was deleted by the Slowmode Filter')
