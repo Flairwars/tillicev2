@@ -5,6 +5,7 @@ const botClient = require('../../discord/init').Client
 // MEGASERVER INFO
 const GuildInfo = {
     'GuildID': '463794005231271976',
+    'noRoleID': '474363054969323520',
     'red': {
         role: '463796585738928128',
         channel: '463802779006402560'
@@ -63,11 +64,12 @@ const GuildInfo = {
 router.put('/:userId', (req, res) => {
     if (req.body.hasOwnProperty('color') && req.body.hasOwnProperty('nickname')) {
         let thisGuild = botClient.guilds.cache.get(GuildInfo.GuildID)
+        let noRole = thisGuild.roles.cache.get(GuildInfo.noRoleID)
         let ColorRole = thisGuild.roles.cache.get(GuildInfo[req.body.color].role)
         let ColorChannel = thisGuild.channels.cache.get(GuildInfo[req.body.color].channel)
         let modifiedUser = thisGuild.members.cache.get(req.params.userId)
 
-        modifiedUser.roles.add(ColorRole).catch(console.error)
+        modifiedUser.roles.add(ColorRole).catch(console.error).then(modifiedUser.roles.remove(noRole).catch(console.error))
         modifiedUser.setNickname(`/u/${req.body.nickname}`).catch(console.error)
         ColorChannel.send(`Welcome to ${req.body.color}, <@${req.params.userId}>\n<@&574972919365632010>`)
     }

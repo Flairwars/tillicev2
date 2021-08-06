@@ -10,7 +10,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
                 let userColor = thisUser.data[0].FlairwarsColor
                 let userRedditName = thisUser.data[0].RedditUsername
 
-                
+
                 console.log(`${process.env.HOSTNAME}/bot/user/${thisUser.data[0].DiscordMemberID}`)
                 axios.put(`${process.env.HOSTNAME}/bot/user/${thisUser.data[0].DiscordMemberID}`, {color: userColor, nickname: userRedditName})
                     .then( success => {
@@ -19,7 +19,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
                     .catch( failure => {
                         console.error(failure)
                     })
-                
+
             }
             else {
                 // If they happen to exist but the reddit info is wrong - Can occur depending on how a user is created
@@ -28,8 +28,14 @@ module.exports.run = (CommandStruct, PermStruct) => {
                 // State is a base64 encoded string of user ID
                 const state = Buffer.from(CommandStruct.message.member.id).toString('base64')
                 let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
-            
-                CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`)
+
+                //Attempt to DM the authorising user
+                try {
+                  CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.channel.send(`<@${req.params.userId}>, check your DMs!`))
+                } catch (e) {
+                  console.log(e);
+                  CommandStruct.message.channel.send(`I tried to send you a DM, but I had a problem trying to do so. Please check if "Enable DMs from this server" is enabled, then try again. If the issue persists, please ping a moderator and ask to be authorised manually!`)
+                }
             }
         }
         else {
@@ -39,8 +45,13 @@ module.exports.run = (CommandStruct, PermStruct) => {
             // State is a base64 encoded string of user ID
             const state = Buffer.from(CommandStruct.message.member.id).toString('base64')
             let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
-        
-            CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`)
+
+            try {
+              CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.channel.send(`<@${req.params.userId}>, check your DMs!`))
+            } catch (e) {
+              console.log(e);
+              CommandStruct.message.channel.send(`I tried to send you a DM, but I had a problem trying to do so. Please check if "Enable DMs from this server" is enabled, then try again. If the issue persists, please ping a moderator and ask to be authorised manually!`)
+            }
         }
     })
 }

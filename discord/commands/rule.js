@@ -10,7 +10,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
     let CommandSubstring = msg.content.split('~')[1].split(' ') // Splits up a command message
     let args = CommandSubstring.slice(1, CommandSubstring.length+1)
-    
+
     CommandStruct.command = CommandSubstring[0] // The first string in the substring array
     CommandStruct.args = CommandSubstring.slice(1, CommandSubstring.length+1) // Pass the rest of the message as args
 
@@ -70,6 +70,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             description = "Some channels, like <#466292953959104512>, have their own specific rules. Please see the pinned messages of the channels and follow those rules."
             break;
         case '14':
+            title = "Use sensible nicknames"
+            description = "Discord nicknames must be PG-Friendly and should be indicative of your Reddit username to some degree. Example: /u/Jarwho11 -> Funniest Mod (Jar) **OR** The Community Infraction Jar."
+            break;
+        case '15':
             title = "No Cheese related puns 🧀"
             description = "Cheese puns will result in a perminant ban. That wouldn't brie very nice."
             break;
