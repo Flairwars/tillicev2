@@ -65,3 +65,4 @@ This directory contains all Express Routers, which are the endpoints used for in
 
 #### /botRoutes
 This directory contains express routes that interact with the Discord and Reddit bots
+

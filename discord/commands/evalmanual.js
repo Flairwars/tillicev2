@@ -1,4 +1,5 @@
 const Discord = require(`discord.js`);
+const perms = require('../eval_perms');
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
@@ -13,7 +14,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
       //const suggestConfig = client.config.suggestions;
       const suggestConfig = {
           "discussionChannelID": '479768552534966286',
-          "pollChannelID": '811781298876055562', // Megaserver pollChannelID = 482269113389940737
+          "pollChannelID": '482269113389940737', // Megaserver pollChannelID = 482269113389940737
           "modPollChannelID": '531511366855688222',
           "votesToPass": 20,
           "defaultColour": "#C9DDFF",
@@ -70,4 +71,4 @@ module.exports.helpText = `Manually evaluate a poll`
 // This should be a string. It will be used for general help to list commands by category
 module.exports.Category = `Mod`
 
-module.exports.RequiredPermissions = []
+module.exports.RequiredPermissions = [perms.levels.Admin]
