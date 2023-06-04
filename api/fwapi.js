@@ -4,7 +4,7 @@ let AuthHeader = {
         Authorization: 'Basic ' + process.env.FWAPI_SECRET
     }
 
-let BaseURL = 'https://api.flairwars.com'
+let BaseURL = process.env.FWAPI_URL
 
 module.exports.GetAllUsers = () => {
     return axios.get(BaseURL+'/users')

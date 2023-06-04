@@ -11,11 +11,11 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
   modQueue.messages.fetch(CommandStruct.args[0]).then(message => {
 
-    let newMQEmbed = new Discord.MessageEmbed(message.embeds[0])
+    let newMQEmbed = new Discord.EmbedBuilder(message.embeds[0])
 
     .setColor('dea305')
     .setTimestamp()
-    .setFooter(`Request Marked In Progress By ${usrMsg.author.tag}: `);
+    .setFooter({text: `Request Marked In Progress By ${usrMsg.author.tag}: `});
 
     message.edit('', {embed: newMQEmbed});
     usrMsg.channel.send("Request has been marked as in progress!").then(msg => msg.delete({timeout: 6000}));

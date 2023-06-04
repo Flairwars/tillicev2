@@ -11,7 +11,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         const RandomQuote = helpers.getRandomEntry(QuotesArray);
         if (RandomQuote.attachments.size > 0) {
             const ImageURL = RandomQuote.attachments.values().next().value.url;
-            await msg.reply(embeds.SendImageEmbed(ImageURL, `Posted by @${RandomQuote.author.tag}`))
+            await msg.reply({embeds: [embeds.SendImageEmbed(ImageURL, `Posted by @${RandomQuote.author.tag}`)]})
             break
         }
     }

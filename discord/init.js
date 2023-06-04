@@ -1,9 +1,18 @@
 
 // Requirements
-const Discord = require('discord.js');
+const {Discord, Client,GatewayIntentBits, Events} = require('discord.js');
 
 // Init discord client
-const client = new Discord.Client();
+const client = new Client({
+  // TODO: if something breaks its probably because of this 
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
 
 // Permission types and evaluation
 const perms = require('./eval_perms')
@@ -61,7 +70,8 @@ let SlowmodeFilter = (msg) => {
 }
 
 // Message Event Listener
-client.on('message', msg => {
+// TODO: 'message' seems to no longer be the right event name 
+client.on(Events.MessageCreate, msg => {
   // plorn reactions
   if (msg.content.toLowerCase().includes("plorn")) {
       msg.react("😳");
@@ -113,17 +123,18 @@ client.on('message', msg => {
         })
 
         // Send the General Help Embed, with categories and command names
-        msg.channel.send(embeds.GeneralHelpEmbed(ResponseStruct))
+        let embed = embeds.GeneralHelpEmbed(ResponseStruct)
+        msg.channel.send({embeds: [embeds.GeneralHelpEmbed(ResponseStruct)]})
       }
       // Specific help command issued (i.e. ~help <command name>)
       else if (CommandStruct.command === 'help' && client.CommandRegistry.hasOwnProperty(CommandStruct.args[0])) {
         // Send help message with command's help text
-        msg.channel.send(
-          embeds.CommandHelpEmbed(
+        msg.channel.send({
+          embeds: [embeds.CommandHelpEmbed(
             CommandStruct.args[0], // The command name, as issued from ~help <command name>
             client.CommandRegistry[CommandStruct.args[0]].helpText // The helptext retrieved from its reference in the Command Registry
-            )
-          )
+            )]
+        })
       }
       // Otherwise...
       else {

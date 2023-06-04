@@ -19,7 +19,8 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
                 r.getSubreddit('flairwars').getUserFlair(thisUser.name).then( userFlair => {
 
-                    CommandStruct.message.channel.send(
+                    CommandStruct.message.channel.send({
+                        embeds: [
                         embeds.redditInfoEmbed(
                             userFlair.flair_css_class.toLowerCase(),
                             username,
@@ -29,8 +30,8 @@ module.exports.run = (CommandStruct, PermStruct) => {
                             commentKarma,
                             awarderKarma,
                             awardeeKarma
-                        )
-                    )
+                        )]
+                        })
                 })
             }
             else {
