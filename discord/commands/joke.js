@@ -4,7 +4,7 @@ const helpers = require('../helpers.js');
 module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
     const Joke = await helpers.GetJoke('https://icanhazdadjoke.com/')
-    msg.reply(embeds.SendEmbed('Joke', Joke))
+    msg.reply({embeds: [embeds.SendEmbed('Joke', Joke)]})
 }
 
 module.exports.helpText = `Gets a random joke`

@@ -15,9 +15,9 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
     .setColor('da1313')
     .setTimestamp()
-    .setFooter(`Request Rejected By ${usrMsg.author.tag}: `);
+    .setFooter({text: `Request Rejected By ${usrMsg.author.tag}: `});
 
-    message.edit('', {embed: newMQEmbed});
+    message.edit('', {embeds: [newMQEmbed]});
     usrMsg.channel.send("Request has been rejected! You may now delete the modqueue logging from the \`#modqueue-requests\` channel").then(msg => msg.delete({timeout: 6000}));
     //const modQueue = CommandStruct.message.guild.channels.cache.get('815937228680200203');
     //modQueue.edit('', {embed: newMQEmbed});

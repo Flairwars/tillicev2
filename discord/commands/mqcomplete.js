@@ -11,11 +11,10 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
   modQueue.messages.fetch(CommandStruct.args[0]).then(message => {
 
-    let newMQEmbed = new Discord.MessageEmbed(message.embeds[0])
-
+    let newMQEmbed = new Discord.EmbedBuilder(message.embeds[0])
     .setColor('18aa08')
     .setTimestamp()
-    .setFooter(`Request Marked Completed By ${usrMsg.author.tag}: `);
+    .setFooter({text: `Request Marked Completed By ${usrMsg.author.tag}: `});
 
     message.edit('', {embed: newMQEmbed});
     usrMsg.channel.send("Request has been completed! You may now delete the modqueue logging from the \`#modqueue-requests\` channel").then(msg => msg.delete({timeout: 6000}));

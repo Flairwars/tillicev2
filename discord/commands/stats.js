@@ -10,10 +10,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     total %= 3600
     let minutes = Math.floor(total / 60)
     let seconds = Math.floor(total % 60)
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
         .setTitle("Statistics")
         .setColor('#888888')
-        .setFooter('Tilice v2')
+        .setFooter({text: 'Tilice v2'})
         .addFields(
 		{ name: 'Uptime', value: `${days} D ${hours} H ${minutes} M ${seconds} S` },
         { name: 'API Latency', value: `${msg.client.ws.ping}ms` },
@@ -24,7 +24,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         { name: 'Discord.js', value: `v${Discord.version}` },
         { name: 'Node.js', value: `${process.version}` },
         { name: 'Platform', value: `${process.platform}` })
-    msg.reply(embed)
+    msg.reply({embeds: [embed]})
 }
 
 module.exports.helpText = `Gets statistics for the Discord bot`

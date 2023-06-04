@@ -6,16 +6,16 @@ const perms = require('../eval_perms');
 module.exports.run = (CommandStruct, PermStruct) => {
   if(!CommandStruct.args[0]) return CommandStruct.message.reply("Please write your request after typing \`~modqueue\`");
 
-  let modqueueRequest = new Discord.MessageEmbed()
+  let modqueueRequest = new Discord.EmbedBuilder()
   .setColor('FFFFFF')
   .setAuthor(`Request submitted by ${CommandStruct.message.author.tag}`, CommandStruct.message.author.displayAvatarURL())
   .setDescription(CommandStruct.args.join(" "))
   .setTimestamp()
-  .setFooter('Request Submitted: ');
+  .setFooter({text: 'Request Submitted: '});
 
   CommandStruct.message.channel.send(modqueueRequest);
   const modQueue = CommandStruct.message.guild.channels.cache.get('744768964630020136');
-  modQueue.send(modqueueRequest);
+  modQueue.send({embeds: [modqueueRequest]});
 
   try {
     CommandStruct.message.delete();

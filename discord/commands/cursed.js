@@ -8,10 +8,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     const ImageURL = await helpers.getRandomRedditImage(subreddit)
     console.log("Image URL:" + ImageURL)
     if(ImageURL == undefined){
-        msg.reply(embeds.SendErrorEmbed('Error', 'No image was found'))
+        msg.reply({embeds: [embeds.SendErrorEmbed('Error', 'No image was found')]})
         console.log("Error Reported: No Image Found")
     } else{
-        msg.reply(embeds.SendImageEmbed(ImageURL, `An image off of r/${subreddit}`))
+        msg.reply({embeds: [embeds.SendImageEmbed(ImageURL, `An image off of r/${subreddit}`)]})
     }
 }
 

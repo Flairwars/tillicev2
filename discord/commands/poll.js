@@ -31,7 +31,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         for (var i = 0; i < options.length; i++) {
             optionsText += emojiList[i] + " " + options[i] + "\n\n"
         }
-        let reply = await msg.reply(embeds.SendEmbed(title, optionsText))
+        let reply = await msg.reply({embeds: [embeds.SendEmbed(title, optionsText)]})
         for (var i = 0; i < options.length; i++) {
             reply.react(emojiList[i])
         }

@@ -1,25 +1,26 @@
 const helpers = require('../helpers.js');
 const Discord = require("discord.js");
 const RedditClient = require('../../reddit/init');
+const fwinfo = require('../flairwarsInfo.js');
 
 //TODO: Placeholder until the flairinfo is available somewhere else
-const flairInfo = {
-    "Red": { colourHex: "#AF0303"},
+// const flairInfo = {
+//     "Red": { colourHex: "#AF0303"},
 
-    "Orange": { colourHex: "#F99A0C"},
+//     "Orange": { colourHex: "#F99A0C"},
 
-    "Yellow": { colourHex: "#FFE500"},
+//     "Yellow": { colourHex: "#FFE500"},
 
-    "Green": { colourHex: "#3ACE04"},
+//     "Green": { colourHex: "#3ACE04"},
 
-    "Blue": { colourHex: "#213AEF"},
+//     "Blue": { colourHex: "#213AEF"},
 
-    "Purple": { colourHex: "#AF0ECC"},
+//     "Purple": { colourHex: "#AF0ECC"},
 
-    "Mod": { colourHex: "#C9DDFF"},
+//     "Mod": { colourHex: "#C9DDFF"},
 
-    "None": { colourHex: "#C9DDFF"}
-}
+//     "None": { colourHex: "#C9DDFF"}
+// }
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = async (CommandStruct, PermStruct) => {
@@ -32,9 +33,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     }
 
     // If the member has no nickname, then they most likely won't have a connected Reddit account yet
+    // TODO: still true?
     if (!member.nickname) {
         await msg.channel.send(`User ${member.user.username} doesn't have a nickname - sending Discord info only.`)
-        await msg.channel.send(buildDiscordEmbed(member));
+        await msg.channel.send({embeds: [buildDiscordEmbed(member)]});
         return;
     }
 

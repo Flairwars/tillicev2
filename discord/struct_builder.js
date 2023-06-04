@@ -18,8 +18,9 @@ module.exports = (msg, guildID, memberID, cb) => {
     // users who are minimods/mods and let them do certain things in any server that tilice is in,
     // so permissions like that will be saved to the database, and will be retrieved using memberID
 
-    PermStruct.Administrator = msg.member.hasPermission('ADMINISTRATOR')
-    PermStruct.BotManager = (msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
+    
+    PermStruct.Administrator = msg.member.permissions.has('Administrator') //msg.member.hasPermission('ADMINISTRATOR')
+    PermStruct.BotManager = (msg.member.permissions.has('Administrator') || msg.member.roles.cache.has(MinimodRole)) //(msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
 
     cb(PermStruct, CommandStruct)
 }
