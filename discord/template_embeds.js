@@ -7,7 +7,7 @@ let BaseEmbed = () => {
 }
 
 
-let ErrorEmbed = () => {
+module.exports.ErrorEmbed = () => {
     return new EmbedBuilder()
         .setColor('#B10c06')
         .setFooter({text: 'Tillice v2'})
