@@ -1,5 +1,5 @@
 if(process.env.NODE_ENV === 'production'){
-    module.exports = require('./buildCfg.prod')
+    module.exports = require('./guildCfg.prod')
 } else {
     module.exports = require('./guildCfg.dev')
 }
