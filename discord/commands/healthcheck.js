@@ -11,7 +11,14 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     }
 
     let guild = msg.guild
-    let allChannels = await msg.guild.channels.fetch()
+    let allChannels = {}
+    try{
+        allChannels = await msg.guild.channels.fetch()
+    } catch (e){
+        console.log(e)
+        msg.channel.send({embeds: template_embeds.SendErrorEmbed("Something went wrong.")})
+        return
+    }
 
     channels = Object.keys(guildCfg).flatMap(channelName => {
         if(channelName == null){
@@ -23,9 +30,9 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             return checkChannel(allChannels, guildCfg[`${channelName}`], `${channelName}`)
         }
     })
-    .filter(elem => elem != "")
-
-    if(channels.length > 0){
+    .filter(elem => elem !== "" && elem !== undefined)
+    
+    if(channels.length != 0){
         channelError = channels
         errorEmbed.addFields({name: "Channels not found", value: channels.join(', ')})
         msg.channel.send({embeds: [errorEmbed]})
@@ -35,7 +42,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 }
 
 function checkChannel(allChannels, id, name){
-    if(id in allChannels){
+    if(allChannels.find(c => c.id == id) != null){
         return ""
     } else {
         return name
