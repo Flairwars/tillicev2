@@ -4,7 +4,7 @@ This is the Tillice Bot for FlairWars, rewritten from the ground up
 # Notes for V2.5 (2023)
 
 ## TODO
-- [ ] Need to remove hardcoded fw server values to allow testing
+- [x] Need to remove hardcoded fw server values to allow testing
 - [ ] Update packages used (do after testing env has been set up) (when possible)
 
 ## Testing checklist
