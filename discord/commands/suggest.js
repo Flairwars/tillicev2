@@ -14,7 +14,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
             CommandStruct.message.guild.channels.cache.get(guildCfg.suggestions).send({ embeds: [
                 embeds.suggestionVotingEmbed(
                     CommandStruct.message.member.displayName,
-                    CommandStruct.message.author.avatarURL,
+                    CommandStruct.message.author.avatarURL(),
                     suggestion,
                     DiscussionMessage.url
                 )
@@ -25,7 +25,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
                 DiscussionMessage.edit({embeds: [
                     embeds.suggestionDiscussionEmbed(
                         CommandStruct.message.member.displayName,
-                        CommandStruct.message.author.avatarURL,
+                        CommandStruct.message.author.avatarURL(),
                         suggestion,
                         SuggestionVotingMessage.url
                     )
