@@ -12,27 +12,11 @@ This is the Tillice Bot for FlairWars, rewritten from the ground up
 - [x] it actually still runs (for the most part)
 - [ ] commands (missing has been fixed already):
     - [ ] auth
-    - [x] channelpoll
     - [ ] count
-    - [x] emojipoll
-    - [x] evalmanual
-    - [x] evaluatesuggestions
     - [ ] listtotems (needs totems to be testable probably)
-    - [x] modqueue
-    - [x] mqcomplete
-    - [x] mqinprogress
-    - [x] mqreject
-    - [x] newyears
-    - [x] poll (make it so it doesnt shit the bed on bad syntax, otherwise good)
-    - [x] pollsuggestions
-    - [x] qdb 
     - [ ] redditinfo (something is still broken for some reason?)
-    - [x] report
-    - [x] rolerequest
     - [ ] serverstats (idk what exactly is wrong but it *still* keeps dying)
-    - [x] suggest
     - [ ] topic (almost done but crashes when called with trueaskreddit ?????????????????????)
-    - [x] topicsuggest
     - [ ] whois (redo reddit part after auth is fixed)
 
 # Setup
