@@ -1,6 +1,24 @@
 # tillicev2
 This is the Tillice Bot for FlairWars, rewritten from the ground up
 
+# Notes for V2.5 (2023)
+
+## TODO
+- [x] Need to remove hardcoded fw server values to allow testing
+- [ ] Update packages used (do after testing env has been set up) (when possible)
+- [ ] fix the reddit stuff
+
+## Testing checklist
+- [x] it actually still runs (for the most part)
+- [ ] commands (missing has been fixed already):
+    - [ ] auth
+    - [ ] count
+    - [ ] listtotems (needs totems to be testable probably)
+    - [ ] redditinfo (something is still broken for some reason?)
+    - [ ] serverstats (idk what exactly is wrong but it *still* keeps dying)
+    - [ ] topic (almost done but crashes when called with trueaskreddit ?????????????????????)
+    - [ ] whois (redo reddit part after auth is fixed)
+
 # Setup
 ## Dependencies
 Angular CLI https://angular.io/guide/setup-local
@@ -28,6 +46,9 @@ This is the Username for the account holding the Reddit App
 
 ### REDDIT_PASSWORD
 This is the Password for the account holding the Reddit App
+
+### FWAPI_URL
+The url of the FlairWars API
 
 ### FWAPI_SECRET
 The secret used for making requests to the FlairWars API

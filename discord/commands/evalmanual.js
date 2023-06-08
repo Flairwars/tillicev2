@@ -1,4 +1,4 @@
-const Discord = require(`discord.js`);
+const {EmbedBuilder} = require(`discord.js`);
 const perms = require('../eval_perms');
 
 // The run function should ALWAYS take CommandStruct and PermStruct
@@ -39,24 +39,19 @@ module.exports.run = (CommandStruct, PermStruct) => {
       if (acceptOrReject === "accept" || acceptOrReject === "deny") {
         suggestionPollChannel.messages.fetch(suggestionsID).then(message => {
 
-          console.log(message.embeds)
-
-          let newPollEmbed = new Discord.MessageEmbed(message.embeds[0])
+          let newPollEmbed = new EmbedBuilder(message.embeds[0])
 
           if (acceptOrReject === "accept") {
-
             newPollEmbed.setColor(suggestConfig.acceptedColour);
-            newPollEmbed.setColor(suggestConfig.acceptedColour);
-            newPollEmbed.setFooter(`Suggestion was accepted`);
+            newPollEmbed.setFooter({text: `Suggestion was accepted`});
           } else {
             newPollEmbed.setColor(suggestConfig.rejectedColour);
-            newPollEmbed.setColor(suggestConfig.rejectedColour);
-            newPollEmbed.setFooter(`Suggestion was rejected`);
+            newPollEmbed.setFooter({text: `Suggestion was rejected`});
           }
 
           console.log(newPollEmbed)
 
-          message.edit('', {embed: newPollEmbed})
+          message.edit({embeds: [newPollEmbed]})
           command.react('👌');
         })
       } else {

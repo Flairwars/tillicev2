@@ -1,27 +1,33 @@
-const fetch = require('node-fetch');
 const RedditClient = require('../reddit/init');
+const { default: axios } = require('axios');
 
 module.exports.GetCatDogImage = async (APIURL) => {
-    const data = await fetch(APIURL)
-    const json = await data.json()
-    return json[0].url
+    const res = await axios.get(APIURL)
+    return res.data[0].url
+    // const data = await fetch(APIURL)
+    // const json = await data.json()
+    // return json[0].url
 }
 
 
 module.exports.GetFoxImage = async (APIURL) => {
-    const data = await fetch(APIURL)
-    const json = await data.json()
-    return json.image
+    const res = await axios.get(APIURL)
+    return res.data.image
+    // const data = await fetch(APIURL)
+    // const json = await data.json()
+    // return json.image
 }
 
 module.exports.GetJoke = async (APIURL) => {
-    var headers = {
-        "Accept": "application/json",
-        "User-Agent": "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)"
-    }
-    const data = await fetch(APIURL, {headers: headers})
-    const json = await data.json()
-    return json.joke
+    const res = await axios.get(APIURL, {headers: {Accept: "application/json"}})
+    return res.data.joke
+    // var headers = {
+    //     "Accept": "application/json",
+    //     "User-Agent": "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)"
+    // }
+    // const data = await fetch(APIURL, {headers: headers})
+    // const json = await data.json()
+    // return json.joke
 }
 
 module.exports.getRandomRedditImage = async (Subreddit) => {
@@ -44,6 +50,7 @@ module.exports.getRandomRedditPost = async (Subreddit) => {
     let bannedWords = ["serious", "nsfw", "sex", "cum", "masturbate", "porn", "nigger", "kike", "spic", "zipperhead", "faggot", "chink", "retard", "dago", "tranny", "paki", "erection", "fetish"]
     do {
         const post = await RedditClient.getSubreddit(Subreddit).getRandomSubmission();
+        console.log(post)
         const allowed = post.post_hint != 'image' && !post.over_18 && !bannedWords.some( word => { return post.title.toLowerCase().includes(word) } ) && post.title.length <= 256;
         if (allowed) return post.title;
         attempts++;
@@ -90,6 +97,7 @@ module.exports.getGuildMemberFromCommandStruct = (CommandStruct) => {
 
 }
 
+// TODO: for gods sake please get this to its own file
 module.exports.getNormalTopic = async () => {
     let replies = [
             "What is the best thing about your colour?",

@@ -10,7 +10,7 @@ module.exports.run = (CommandStruct, PermStruct) => {
         msg.channel.send(`Cannot find member with username \`${CommandStruct.args[0]}\` on this Discord server.`)
     }
     else {
-        msg.channel.send(embeds.SendImageEmbed(member.user.avatarURL({size: 1024}), member.displayName))
+        msg.channel.send({embeds: [embeds.SendImageEmbed(member.user.avatarURL({size: 1024}), member.displayName)]})
     }
 }
 

@@ -1,25 +1,26 @@
 const helpers = require('../helpers.js');
-const Discord = require("discord.js");
+const {EmbedBuilder} = require("discord.js");
 const RedditClient = require('../../reddit/init');
+const fwinfo = require('../flairwarsInfo.js');
 
 //TODO: Placeholder until the flairinfo is available somewhere else
-const flairInfo = {
-    "Red": { colourHex: "#AF0303"},
+// const flairInfo = {
+//     "Red": { colourHex: "#AF0303"},
 
-    "Orange": { colourHex: "#F99A0C"},
+//     "Orange": { colourHex: "#F99A0C"},
 
-    "Yellow": { colourHex: "#FFE500"},
+//     "Yellow": { colourHex: "#FFE500"},
 
-    "Green": { colourHex: "#3ACE04"},
+//     "Green": { colourHex: "#3ACE04"},
 
-    "Blue": { colourHex: "#213AEF"},
+//     "Blue": { colourHex: "#213AEF"},
 
-    "Purple": { colourHex: "#AF0ECC"},
+//     "Purple": { colourHex: "#AF0ECC"},
 
-    "Mod": { colourHex: "#C9DDFF"},
+//     "Mod": { colourHex: "#C9DDFF"},
 
-    "None": { colourHex: "#C9DDFF"}
-}
+//     "None": { colourHex: "#C9DDFF"}
+// }
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = async (CommandStruct, PermStruct) => {
@@ -32,9 +33,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     }
 
     // If the member has no nickname, then they most likely won't have a connected Reddit account yet
+    // TODO: still true?
     if (!member.nickname) {
         await msg.channel.send(`User ${member.user.username} doesn't have a nickname - sending Discord info only.`)
-        await msg.channel.send(buildDiscordEmbed(member));
+        await msg.channel.send({embeds: [buildDiscordEmbed(member)]});
         return;
     }
 
@@ -76,22 +78,22 @@ module.exports.Category = `Misc`
 
 function buildDiscordEmbed(member) {
     // Build the basis of the embed
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor("#d4d4d4")
         .setTitle(member.user.tag)
         .setThumbnail(member.user.avatarURL())
-        .setFooter(`ID: ${member.user.id}`)
+        .setFooter({text: `ID: ${member.user.id}`})
         .setDescription(member.toString())
 
-    const roles = member.roles.cache.array()
-        .filter(role => role.id !== member.guild.id)
+    const roles = Array.from(member.roles.cache
+        .filter(role => role.id !== member.guild.id))
         .join(' ');
 
-    embed.addFields(
+    embed.addFields([
         { name: "Discord account created", value: member.user.createdAt.toDateString(), inline: true},
         { name: "Joined this server", value: member.joinedAt.toDateString(), inline:true},
         { name: "Roles", value: roles ? roles : "No roles assigned"}
-    )
+    ])
 
     return embed;
 }
@@ -121,29 +123,29 @@ async function buildRedditEmbed(member, redditUser) {
         .join(' ');
 
     // Build the basis of the embed
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
         .setColor(flairInfo[flair].colourHex)
         .setTitle(member.user.tag)
         .setThumbnail(member.user.avatarURL())
-        .setFooter(`ID: ${member.user.id}`)
+        .setFooter({text: `ID: ${member.user.id}`})
         .setDescription(`${member}\n[/u/${redditUser.name}](https://www.reddit.com/u/${redditUser.name})`);
 
-    embed.addFields(
+    embed.addFields([
         {name: "Flair", value: flair},
         {name: "Reddit account created", value: redditAge, inline: true},
         {name: "Karma", value: karma, inline: true}
-    )
+    ])
 
     // List the trophies if there are any available
     if (trophies.length > 0) {
-        embed.addField("Trophies", trophies.map(trophy => trophy.name).join("\n"));
+        embed.addFields({name: "Trophies", value: trophies.map(trophy => trophy.name).join("\n")});
     }
 
-    embed.addFields(
+    embed.addFields([
         { name: "Discord account created", value: member.user.createdAt.toDateString(), inline: true},
         { name: "Joined this server", value: member.joinedAt.toDateString(), inline:true},
         { name: "Roles", value: roles ? roles : "No roles assigned"}
-    )
+    ])
 
     return embed;
 }

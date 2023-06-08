@@ -6,12 +6,12 @@ const guildCfg = require('../guildCfg')
 module.exports.run = (CommandStruct, PermStruct) => {
 
     if (CommandStruct.args.length == 0) {
-        CommandStruct.message.channel.send(embeds.SendErrorEmbed('Invalid arguments', 'Please use this command in the format `topicsuggest suggestion`'))
+        CommandStruct.message.channel.send({embeds: [embeds.SendErrorEmbed('Invalid arguments', 'Please use this command in the format `topicsuggest suggestion`')]})
     }
     else {
         const suggestion = CommandStruct.args.join(' ')
         CommandStruct.message.guild.channels.cache.get(guildCfg.topicSuggestions)
-            .send(embeds.topicSuggestion(CommandStruct.message.member.displayName, suggestion))
+            .send({embeds: [embeds.topicSuggestion(CommandStruct.message.member.displayName, suggestion)]})
             .then(suggestionMessage => {
                 suggestionMessage.react("👍")
                 suggestionMessage.react('👎')

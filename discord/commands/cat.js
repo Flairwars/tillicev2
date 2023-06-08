@@ -5,7 +5,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message;
     const ImageURL = await helpers.GetCatDogImage('http://thecatapi.com/api/images/get?format=json')
     console.log(ImageURL)
-    msg.reply(embeds.SendImageEmbed(ImageURL, 'Cat'))
+    msg.reply({embeds: [embeds.SendImageEmbed(ImageURL, 'Cat')]})
 }
 
 module.exports.helpText = `Gets an image of a cute cat`

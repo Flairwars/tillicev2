@@ -2,20 +2,21 @@
 const Discord = require('discord.js');
 const Client = require('../init');
 const perms = require('../eval_perms');
+const guildCfg = require('../guildCfg')
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
   if(!CommandStruct.args[0]) return CommandStruct.message.reply("Please write your request after typing \`~modqueue\`");
 
-  let modqueueRequest = new Discord.MessageEmbed()
+  let modqueueRequest = new Discord.EmbedBuilder()
   .setColor('FFFFFF')
-  .setAuthor(`Request submitted by ${CommandStruct.message.author.tag}`, CommandStruct.message.author.displayAvatarURL())
+  .setAuthor({name: `Request submitted by ${CommandStruct.message.author.tag}`, iconURL: CommandStruct.message.author.displayAvatarURL()})
   .setDescription(CommandStruct.args.join(" "))
   .setTimestamp()
-  .setFooter('Request Submitted: ');
+  .setFooter({text: 'Request Submitted: '});
 
-  CommandStruct.message.channel.send(modqueueRequest);
-  const modQueue = CommandStruct.message.guild.channels.cache.get('744768964630020136');
-  modQueue.send(modqueueRequest);
+  CommandStruct.message.channel.send({embeds: [modqueueRequest]});
+  const modQueue = CommandStruct.message.guild.channels.cache.get(guildCfg.modQueueChannelId);
+  modQueue.send({embeds: [modqueueRequest]});
 
   try {
     CommandStruct.message.delete();

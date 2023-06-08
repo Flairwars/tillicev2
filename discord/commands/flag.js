@@ -30,7 +30,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         msg.reply("Please specify a valid colour")
         return
     }
-    msg.reply(embeds.SendImageEmbed(flag, CommandStruct.args[0].toLowerCase()))
+    msg.reply({embeds: [embeds.SendImageEmbed(flag, CommandStruct.args[0].toLowerCase())]})
 }
 
 module.exports.helpText = `Gets the flag of a colour`

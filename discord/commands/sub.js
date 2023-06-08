@@ -2,6 +2,8 @@
 
 // The run function should ALWAYS take CommandStruct and PermStruct
 module.exports.run = (CommandStruct, PermStruct) => {
+    const Discord = require('discord.js');
+
   const flairwarsInfo = require('../flairwarsInfo');
   // No arguments passed
   if (CommandStruct.args.length === 0) {
@@ -30,27 +32,20 @@ module.exports.run = (CommandStruct, PermStruct) => {
 
      // If the input is a colour (defined in flairwarsInfo.colours) - excluding mods, for example
      if (colours.some(colour => colour.toLowerCase() === CommandStruct.args[0].toLowerCase())) {
-
-     colourSubreddit = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].subreddit;
-     flag = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].squareIconUrl;
-     sideHex = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].colourHex;
-         colourSubLink = "https://www.reddit.com/r/" + colourSubreddit;
-     colourName = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].name;
-
+        colourSubreddit = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].subreddit;
+        flag = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].squareIconUrl;
+        sideHex = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].colourHex;
+            colourSubLink = "https://www.reddit.com/r/" + colourSubreddit;
+        colourName = flairwarsInfo.flairInfo[CommandStruct.args[0].toLowerCase()].name;
      }
      console.log(colourSubreddit)
 
-
-     const Discord = require('discord.js');
-     //const client = new Discord.Client();
-
-     var embed = new Discord.MessageEmbed()
-
+     var embed = new Discord.EmbedBuilder()
      .setDescription(colourSubLink)
      .setColor(sideHex)
-     .setAuthor(colourSubreddit, flag, colourSubLink)
+     .setAuthor({name: colourSubreddit, iconURL: flag, url: colourSubLink})
 
-     let msg = CommandStruct.message.channel.send({ embed });
+     let msg = CommandStruct.message.channel.send({embeds: [embed]});
 
      }
   else{
@@ -98,12 +93,12 @@ module.exports.run = (CommandStruct, PermStruct) => {
           const descriptionOther = flairwarsInfo.relatedSubreddits.join(">" + '\n' + "<https://www.reddit.com/r/");
           // list all subreddits from flairwarsInfo.relatedSubreddits in link form
 
-          var embed2 = new RichEmbed()
+          var embed2 = new Discord.EmbedBuilder()
 
               .setTitle("List of other Flairwars related subreddits:")
               .setDescription('<https://www.reddit.com/r/' + descriptionOther + '>')
 
-          CommandStruct.message.channel.send(embed2);
+          CommandStruct.message.channel.send({embeds: [embed2]});
           return;
 
       }

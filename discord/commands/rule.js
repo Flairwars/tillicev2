@@ -16,6 +16,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 
     const argText = args[0] === undefined ? "" : args[0]
     console.log(argText)
+    // TODO: make this not hardcoded mayhaps? also might need an update after so fucking long
     switch(argText) {
         case '1':
             title = "Obey the Moderators"
@@ -81,7 +82,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             title = "No rule defined.";
             description = "For a complete list of rules, head to: <#463831713651359774>"        
     }
-    msg.reply(embeds.SendEmbed(title, description))
+    msg.reply({embeds: [embeds.SendEmbed(title, description)]})
 }
 
 module.exports.helpText = `Shows a specified rule from the #rules channel`

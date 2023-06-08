@@ -1,21 +1,21 @@
-const Discord = require('discord.js')
+const {EmbedBuilder} = require('discord.js')
 
 let BaseEmbed = () => {
-    return new Discord.MessageEmbed()
+    return new EmbedBuilder()
         .setColor('#888888')
-        .setFooter('Tillice v2')
+        .setFooter({text: 'Tillice v2'})
 }
 
 
-let ErrorEmbed = () => {
-    return new Discord.MessageEmbed()
+module.exports.ErrorEmbed = () => {
+    return new EmbedBuilder()
         .setColor('#B10c06')
-        .setFooter('Tillice v2')
+        .setFooter({text: 'Tillice v2'})
         .setImage('https://i.imgur.com/5b3Misq.png')
 }
 
 let fwFlavoredEmbed = (color) => {
-    let newEmbed = new Discord.MessageEmbed()
+    let newEmbed = new EmbedBuilder()
         switch(color) {
             case "red":
                 newEmbed.setColor('#ff0000')
@@ -49,7 +49,7 @@ let fwFlavoredEmbed = (color) => {
                 newEmbed.setColor('#888888')
                 break;
         }       
-        newEmbed.setFooter('Tillice v2')
+        newEmbed.setFooter({text: 'Tillice v2'})
 
         return newEmbed
 }
@@ -58,7 +58,7 @@ module.exports.GeneralHelpEmbed = (HelpResponseStruct) => {
     let Embed = BaseEmbed()
     // Use the struct we built to populate an embed
     Object.keys(HelpResponseStruct).forEach( category => {
-        Embed.addField(category, HelpResponseStruct[category].join(', '))
+        Embed.addFields({name: category, value: HelpResponseStruct[category].join(', ')})
     })
     return Embed
 }
@@ -66,7 +66,7 @@ module.exports.GeneralHelpEmbed = (HelpResponseStruct) => {
 
 module.exports.CommandHelpEmbed = (CommandName, CommandHelp) => {
     let Embed = BaseEmbed()
-    Embed.addField(CommandName, CommandHelp)
+    Embed.addFields({name: CommandName, value: CommandHelp})
     return Embed
 }
 
@@ -122,19 +122,19 @@ module.exports.SkeletonEmbed = () => {
 
 module.exports.suggestionVotingEmbed = (user, userPfp, suggestion, link) => {
     let Embed = BaseEmbed()
-    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    Embed.setAuthor({name: `Suggestion by ${user}`, iconURL: userPfp})
     .setDescription(suggestion)
     .setTimestamp()
-    .addField('Talk about it!', `[Jump to discussion](${link})`)
+    .addFields({name: 'Talk about it!', value: `[Jump to discussion](${link})`})
     return Embed
 }
 
 module.exports.suggestionDiscussionEmbed = (user, userPfp, suggestion, link) => {
     let Embed = BaseEmbed()
-    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    Embed.setAuthor({name: `Suggestion by ${user}`, iconURL: userPfp})
     .setDescription(suggestion)
     .setTimestamp()
-    .addField('Talk about it!', `[Vote on it](${link})`)
+    .addFields({name: 'Talk about it!', value: `[Vote on it](${link})`})
     return Embed
 }
 
@@ -142,10 +142,12 @@ module.exports.redditInfoEmbed = (color, username, creationDate, totalKarma, lin
     let Embed = fwFlavoredEmbed(color)
     Embed.setTitle(username)
     Embed.setDescription(`[${username}](https://reddit.com${username})`)
-    Embed.addField('Flair', color, true)
-    Embed.addField('Account created', creationDate, true)
-    Embed.addField('Total Karma', totalKarma, true)
-    Embed.addField('Karma Breakdown', `Post karma: ${linkKarma}\nComment Karma: ${commentKarma}\nAwarder Karma: ${awarderKarma}\nAwardee Karma: ${awardeeKarma}`)
+    Embed.addFields([
+        {name: 'Flair', value: color, inline: true},
+        {name: 'Account created', value: creationDate, inline: true},
+        {name: 'Total Karma', value: totalKarma, inline: true},
+        {name: 'Karma Breakdown', value: `Post karma: ${linkKarma}\nComment Karma: ${commentKarma}\nAwarder Karma: ${awarderKarma}\nAwardee Karma: ${awardeeKarma}`}
+    ])
     return Embed
 }
 
