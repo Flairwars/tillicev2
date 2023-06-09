@@ -11,7 +11,7 @@ This is the Tillice Bot for FlairWars, rewritten from the ground up
 ## Testing checklist
 - [x] it actually still runs (for the most part)
 - [ ] commands (missing has been fixed already):
-    - [ ] auth
+    - [x] auth
     - [ ] count
     - [ ] listtotems (needs totems to be testable probably)
     - [ ] redditinfo (something is still broken for some reason?)
