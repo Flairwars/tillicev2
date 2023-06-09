@@ -27,14 +27,15 @@ module.exports.run = (CommandStruct, PermStruct) => {
                 const redirect_uri = `${currentHost}/auth/reddit/callback`
                 // State is a base64 encoded string of user ID
                 const state = Buffer.from(CommandStruct.message.member.id).toString('base64')
-                let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
+                let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_OAUTH_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
 
                 //Attempt to DM the authorising user
                 try {
-                  CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.channel.send(`<@${req.params.userId}>, check your DMs!`))
+                  // TODO: this should ping the user
+                  CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.reply(`Check your DMs!`))
                 } catch (e) {
                   console.log(e);
-                  CommandStruct.message.channel.send(`I tried to send you a DM, but I had a problem trying to do so. Please check if "Enable DMs from this server" is enabled, then try again. If the issue persists, please ping a moderator and ask to be authorised manually!`)
+                  CommandStruct.message.reply(`I tried to send you a DM, but I had a problem trying to do so. Please check if "Enable DMs from this server" is enabled, then try again. If the issue persists, please ping a moderator and ask to be authorised manually!`)
                 }
             }
         }
@@ -44,10 +45,13 @@ module.exports.run = (CommandStruct, PermStruct) => {
             const redirect_uri = `${currentHost}/auth/reddit/callback`
             // State is a base64 encoded string of user ID
             const state = Buffer.from(CommandStruct.message.member.id).toString('base64')
-            let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
+            let RedditAuthUri = `https://www.reddit.com/api/v1/authorize?client_id=${process.env.REDDIT_OAUTH_CLIENTID}&response_type=code&state=${state}&redirect_uri=${redirect_uri}&scope=identity`
 
             try {
-              CommandStruct.message.member.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.channel.send(`<@${req.params.userId}>, check your DMs!`))
+              CommandStruct.message.member.createDM().then(dm => {
+                // TODO: this should ping the user
+                dm.send(`Hi! Please log in with Reddit so we can verify\n${RedditAuthUri}`).then(CommandStruct.message.reply(`Check your DMs!`))
+              })
             } catch (e) {
               console.log(e);
               CommandStruct.message.channel.send(`I tried to send you a DM, but I had a problem trying to do so. Please check if "Enable DMs from this server" is enabled, then try again. If the issue persists, please ping a moderator and ask to be authorised manually!`)

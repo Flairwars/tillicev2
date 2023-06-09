@@ -35,6 +35,12 @@ To build the frontend to `/public`, run `ng build` in the `/Frontend` directory.
 ### DISCORD_TOKEN
 This is the discord bot token, used to log in the bot
 
+### REDDIT_OAUTH_CLIENTID
+The bot needs to a script app most of the time in order to be able to authenticate using saved credentials. But script apps aren't allowed to use OAuth2, so we also need a webapp ID for the auth command to work
+
+### REDDIT_OAUTH_CLIENTSECRET
+Same as above, a reddit web app clientsecret
+
 ### REDDIT_CLIENTID
 This is the Client ID for the Reddit App
 

@@ -13,7 +13,7 @@ router.get('/reddit/callback', (req, res) => {
   
         const RedditAuthHeaders = {
             headers: {
-                'Authorization': "Basic " + Buffer.from(`${process.env.REDDIT_CLIENTID}:${process.env.REDDIT_CLIENTSECRET}`).toString('base64')
+                'Authorization': "Basic " + Buffer.from(`${process.env.REDDIT_OAUTH_CLIENTID}:${process.env.REDDIT_OAUTH_CLIENTSECRET}`).toString('base64')
             }
         }
 
@@ -35,17 +35,16 @@ router.get('/reddit/callback', (req, res) => {
                 }
 
                 const r = require('../reddit/init')
+                console.log(r.scope)
 
                 // TODO: Check if a user is banned from fw before authing
                 // This is imposible at present because Tillice does not have the permissions for it
                 // regarding feedback in https://github.com/Flairwars/tillicev2/pull/22#discussion_r576494872
                 // r.getSubreddit('flairwars').getBannedUsers({name: RedditInfo.username.split('u/')[1]}).then(console.log)
 
-                r.getSubreddit('flairwars').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
-                    console.log(flair)
+                r.getSubreddit('rebalint').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
                     FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
                         .then( success => {
-                            console.log(success.data)
                             axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
                                     color: flair.flair_css_class.toLowerCase(), 
                                     nickname: RedditInfo.username.split('u/')[1]
