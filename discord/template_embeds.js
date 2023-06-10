@@ -122,16 +122,16 @@ module.exports.SkeletonEmbed = () => {
 
 module.exports.suggestionVotingEmbed = (user, userPfp, suggestion, link) => {
     let Embed = BaseEmbed()
-    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    Embed.setAuthor({name: `Suggestion by ${user}`, iconURL: userPfp})
     .setDescription(suggestion)
     .setTimestamp()
-    .addField('Talk about it!', `[Jump to discussion](${link})`)
+    .addFields({name: 'Talk about it!', value: `[Jump to discussion](${link})`})
     return Embed
 }
 
 module.exports.suggestionDiscussionEmbed = (user, userPfp, suggestion, link) => {
     let Embed = BaseEmbed()
-    Embed.setAuthor(`Suggestion by ${user}`, userPfp)
+    Embed.setAuthor({name: `Suggestion by ${user}`, iconURL: userPfp})
     .setDescription(suggestion)
     .setTimestamp()
     .addFields({name: 'Talk about it!', value: `[Vote on it](${link})`})

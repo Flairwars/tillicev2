@@ -1,10 +1,10 @@
 const embeds = require('../template_embeds')
 const helpers = require('../helpers.js')
+const guildCfg = require('../guildCfg')
 
 module.exports.run = async (CommandStruct, PermStruct) => {
     let msg = CommandStruct.message
-    const QDBChannelID = '466292953959104512' // for main server 466292953959104512
-    const QDBChannel = msg.guild.channels.cache.get(QDBChannelID)
+    const QDBChannel = msg.guild.channels.cache.get(guildCfg.qdbChannelId)
     const Quotes = await QDBChannel.messages.fetch({ limit: 100 })
     const QuotesArray = Array.from(Quotes.values())
     while (true) {

@@ -95,7 +95,10 @@ let GetPage = async (subreddit, after) => {
 }
 
 let GetUserColor = async (user) => {
-    return await (await redditClient.getSubreddit('flairwars')).getUserFlair(user)
+    return await (await redditClient.getSubreddit('flairwars')).getUserFlair(user).catch(e => {
+        console.log("Couldn't read user flair. Am I mod on r/flairwars?")
+        throw new Error()
+    })
 }
 
 let ComposeCount = async (subreddit, CommandStruct, pages) => {
@@ -121,7 +124,7 @@ let ComposeCount = async (subreddit, CommandStruct, pages) => {
         for (let j = 0; j < PostPerPageData[i].length; j++) {
             let post = PostPerPageData[i][j]
             if (! UserColorMapping.hasOwnProperty(post.author.name)) {
-                let UserColor = await GetUserColor(post.author.name)
+                let UserColor = await GetUserColor(post.author.name).catch(CommandStruct.message.channel.send({embeds: [embeds.ErrorEmbed()]}))
                 UserColorMapping[post.author.name] = UserColor.flair_css_class
             }
         }

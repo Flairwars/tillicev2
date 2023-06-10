@@ -1,6 +1,6 @@
 
 // Requirements
-const {Discord, Client,GatewayIntentBits, Events} = require('discord.js');
+const {Discord, Client,GatewayIntentBits, Events, Partials} = require('discord.js');
 
 // Init discord client
 const client = new Client({
@@ -11,6 +11,10 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.DirectMessages,
     GatewayIntentBits.MessageContent
+  ],
+  partials: [
+    Partials.Channel,
+    Partials.Message
   ]
 });
 
@@ -70,7 +74,6 @@ let SlowmodeFilter = (msg) => {
 }
 
 // Message Event Listener
-// TODO: 'message' seems to no longer be the right event name 
 client.on(Events.MessageCreate, msg => {
   // plorn reactions
   if (msg.content.toLowerCase().includes("plorn")) {
@@ -85,9 +88,9 @@ client.on(Events.MessageCreate, msg => {
 
   // If the message came from a bot or it's a DM, ignore it.
   if(msg.author.bot) return;
-  else if (msg.guild === null) { // The bot got a message from a DM
-    client.channels.cache.get('485223000875204618').send( // #void-general ID 485223000875204618
-      embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)
+  else if (!msg.inGuild()) { // The bot got a message from a DM
+    client.channels.cache.get(guildCfg.voidGeneral).send( // #void-general ID 485223000875204618
+      {embeds: [embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)]}
     )
   }
 

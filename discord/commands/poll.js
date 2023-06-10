@@ -19,6 +19,9 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 
         let emojiList = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯", "🇰", "🇱", "🇲", "🇳", "🇴", "🇵", "🇶", "🇷", "🇸", "🇹"]
         let options = parseOptions(msg, text)
+        if(options == undefined){
+            return;
+        }
         if (options.length > 20) {
             msg.reply(`Too many options (maximum 20)`)
             return

@@ -16,7 +16,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
         return
     }
     await msg.channel.send(`**${Category.name}**`)
-    const channels = new Map([...Category.children.entries()].sort((a, b) => a[1].name.localeCompare(b[1].name)))
+    const channels = new Map([...Category.children.cache].sort((a, b) => a[1].name.localeCompare(b[1].name)))
     for (var [channelID, channel] of channels) {
         const NewMessage = await msg.channel.send(`Archive/unarchive ${channel}?`)
         await NewMessage.react("👍")   // thumbsup
