@@ -37,6 +37,8 @@ const normalizedPath = require('path').join(__dirname, "commands")
 // TODO: Move this to db
 const guildCfg = require('./guildCfg');
 
+const FWApi = require('../api/fwapi')
+
 // TODO: LOAD CONFIG FROM DB
 const GuildPrefix = '~'
 
@@ -73,6 +75,32 @@ let SlowmodeFilter = (msg) => {
   else return false
 }
 
+let SetPassword = (msg) => {
+  let args = msg.content.split(' ').slice(1)
+  if(args.length == 0){
+    msg.reply("Please send a password.")
+    return 
+ }
+ FWApi.SetPassword(msg.author.id, args.join(' '))
+ .then(msg.reply('Success!'))
+ .catch(e => {
+     switch(e.response.status){
+        // for some reason, successful requests still seem to fall through sometimes?   
+        case 200:
+          break
+        case 500:
+          msg.reply('Failed: Server error')
+          break
+        case 404:
+          msg.reply('You have to register first by using ~auth on a server')
+          break
+        default:
+          console.log(e)
+          msg.reply('Failed: unknown error')
+     }
+ })
+}
+
 // Message Event Listener
 client.on(Events.MessageCreate, msg => {
   // plorn reactions
@@ -86,12 +114,18 @@ client.on(Events.MessageCreate, msg => {
       msg.react("541887773729226763");
   }
 
-  // If the message came from a bot or it's a DM, ignore it.
+  // If the message came from a bot, ignore it.
   if(msg.author.bot) return;
   else if (!msg.inGuild()) { // The bot got a message from a DM
-    client.channels.cache.get(guildCfg.voidGeneral).send( // #void-general ID 485223000875204618
-      {embeds: [embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)]}
-    )
+    // if message is the setpassword "command", do that
+    if(msg.content.startsWith(`${GuildPrefix}setpassword`)){
+      SetPassword(msg)
+    } else {
+      client.channels.cache.get(guildCfg.voidGeneral).send( // #void-general ID 485223000875204618
+        {embeds: [embeds.SendEmbed(`Message from ${msg.author.username}#${msg.author.discriminator}`, msg.content)]}
+      )
+      
+    }
   }
 
   else if (

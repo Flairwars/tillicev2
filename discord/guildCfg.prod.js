@@ -26,3 +26,32 @@ module.exports.slowmodedChannels = [
 module.exports.pollChannelId = "482269113389940737"
 module.exports.modPollChannelId = "531511366855688222"
 module.exports.suggestionTreshold = 15
+
+module.exports.GuildInfo = {
+    'GuildID': '463794005231271976',
+    'noRoleID': '474363054969323520',
+    'red': {
+        role: '463796585738928128',
+        channel: '463802779006402560'
+    },
+    'orange': {
+        role: '463796993047920642',
+        channel: '463804140259246080'
+    },
+    'yellow': {
+        role: '463797165643530260',
+        channel: '463807168018251813'
+    },
+    'green': {
+        role: '463797511681736705',
+        channel: '463811712391577622'
+    },
+    'blue': {
+        role: '463797611783258123',
+        channel: '463812439927160842'
+    },
+    'purple': {
+        role: '463797860723326976',
+        channel: '463812871458127883'
+    }
+}

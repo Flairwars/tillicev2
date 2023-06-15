@@ -11,37 +11,44 @@ module.exports.GetAllUsers = () => {
 }
 
 module.exports.GetUsersByColor = (color) => {
-    return axios.get(BaseURL+'/users', { params: {FlairwarsColor: color} })
+    return axios.get(BaseURL+'/fwUsers', { params: {FlairwarsColor: color} })
 }
 
 module.exports.GetUserByName = (username) => {
-    return axios.get(BaseURL+'/users', { params: {RedditUsername: username} })
+    return axios.get(BaseURL+'/fwUsers', { params: {RedditUsername: username} })
 }
 
 module.exports.GetUserByID = (memberID) => {
-    return axios.get(BaseURL+'/users', { params: {DiscordMemberID: memberID} })
+    return axios.get(BaseURL+`/fwUsers/${memberID}`, {headers: AuthHeader})
+}
+
+module.exports.SetPassword = (memberID, password) => {
+    return axios.post(BaseURL+`/fwUsers/${memberID}/credentials`, {
+        WPPassword: password
+    }, {
+        headers: AuthHeader
+    })
 }
 
 module.exports.CreateUserIDOnly = (memberID) => {
-    return axios.post(BaseURL+'/users', {
+    return axios.post(BaseURL+'/fwUsers', {
         DiscordMemberID: memberID
     }, {
         headers: AuthHeader
     })
 }
 
-module.exports.CreateFullUser = (memberID, redditUsername, fwColor) => {
-    return axios.post(BaseURL+'/users', {
-        DiscordMemberID: memberID,
-        FlairwarsColor: fwColor,
-        RedditUsername: redditUsername
+module.exports.CreateFullUser = (memberID, redditUsername) => {
+    return axios.post(BaseURL+'/fwUsers', {
+        discordMemberId: memberID,
+        redditUsername: redditUsername
     }, {
         headers: AuthHeader
     })
 }
 
 module.exports.UpdateUser = (memberID, redditUsername, fwColor) => {
-    return axios.put(BaseURL+`/users/id/${memberID}`, {
+    return axios.put(BaseURL+`/fwUsers/${memberID}`, {
         FlairwarsColor: fwColor,
         RedditUsername: redditUsername
     }, {
@@ -49,8 +56,17 @@ module.exports.UpdateUser = (memberID, redditUsername, fwColor) => {
     })
 }
 
+module.exports.CreateRedditUser = (redditUsername, flairwarsColor) => {
+    return axios.post(BaseURL+`/redditUsers`, {
+        RedditUsername: redditUsername,
+        FlairwarsColor: flairwarsColor
+    }, {
+        headers: AuthHeader
+    })
+}
+
 module.exports.UpdateUserRedditName = (memberID, redditUsername) => {
-    return axios.put(BaseURL+`/users/id/${memberID}`, {
+    return axios.put(BaseURL+`/fwUsers/${memberID}`, {
         RedditUsername: redditUsername
     }, {
         headers: AuthHeader
@@ -58,7 +74,7 @@ module.exports.UpdateUserRedditName = (memberID, redditUsername) => {
 }
 
 module.exports.UpdateUserFWColor = (memberID, fwColor) => {
-    return axios.put(BaseURL+`/users/id/${memberID}`, {
+    return axios.put(BaseURL+`/fwUsers/${memberID}`, {
         FlairwarsColor: fwColor
     }, {
         headers: AuthHeader
@@ -66,7 +82,7 @@ module.exports.UpdateUserFWColor = (memberID, fwColor) => {
 }
 
 module.exports.UpdateUserNickname = (memberID, nick) => {
-    return axios.put(BaseURL+`/users/id/${memberID}`, {
+    return axios.put(BaseURL+`/fwUsers/${memberID}`, {
         MemberNickname: nick
     }, {
         headers: AuthHeader

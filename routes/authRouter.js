@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const axios = require('axios')
 const FWAPI = require('../api/fwapi')
+const redditCfg = require('../reddit/redditCfg')
 
 router.get('/reddit/callback', (req, res) => {
     if (req.query.error) {
@@ -10,24 +11,24 @@ router.get('/reddit/callback', (req, res) => {
         let RedditState = req.query.state
         let UserID = Buffer.from(RedditState, 'base64').toString('ascii')
         let RedditAccessCode = req.query.code
-  
+
         const RedditAuthHeaders = {
             headers: {
-                'Authorization': "Basic " + Buffer.from(`${process.env.REDDIT_CLIENTID}:${process.env.REDDIT_CLIENTSECRET}`).toString('base64')
+                'Authorization': "Basic " + Buffer.from(`${process.env.REDDIT_OAUTH_CLIENTID}:${process.env.REDDIT_OAUTH_CLIENTSECRET}`).toString('base64')
             }
         }
 
         const Callbackuri = process.env.HOSTNAME
-  
-        axios.post('https://www.reddit.com/api/v1/access_token', `grant_type=authorization_code&code=${RedditAccessCode}&redirect_uri=${Callbackuri}/auth/reddit/callback`, RedditAuthHeaders).then( LoginResponse => {
-        const RedditApiBaseUrl = 'https://oauth.reddit.com'
-        const AuthenticationHeader = {
-            headers: {
-            'Authorization': 'bearer ' + LoginResponse.data.access_token
+
+        axios.post('https://www.reddit.com/api/v1/access_token', `grant_type=authorization_code&code=${RedditAccessCode}&redirect_uri=${Callbackuri}/auth/reddit/callback`, RedditAuthHeaders).then(LoginResponse => {
+            const RedditApiBaseUrl = 'https://oauth.reddit.com'
+            const AuthenticationHeader = {
+                headers: {
+                    'Authorization': 'bearer ' + LoginResponse.data.access_token
+                }
             }
-        }
-  
-            axios.get(RedditApiBaseUrl + '/api/v1/me', AuthenticationHeader).then( ApiResponse => {
+
+            axios.get(RedditApiBaseUrl + '/api/v1/me', AuthenticationHeader).then(ApiResponse => {
                 const RedditInfo = {
                     username: ApiResponse.data.subreddit.display_name_prefixed,
                     totalKarma: ApiResponse.data.total_karma,
@@ -41,27 +42,29 @@ router.get('/reddit/callback', (req, res) => {
                 // regarding feedback in https://github.com/Flairwars/tillicev2/pull/22#discussion_r576494872
                 // r.getSubreddit('flairwars').getBannedUsers({name: RedditInfo.username.split('u/')[1]}).then(console.log)
 
-                r.getSubreddit('flairwars').getUserFlair(RedditInfo.username.split('u/')[1]).then( flair => {
-                    console.log(flair)
-                    FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
-                        .then( success => {
-                            console.log(success.data)
-                            axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
-                                    color: flair.flair_css_class.toLowerCase(), 
-                                    nickname: RedditInfo.username.split('u/')[1]
+                r.getSubreddit(redditCfg.subreddit).getUserFlair(RedditInfo.username.split('u/')[1]).then(flair => {
+                    FWAPI.CreateRedditUser(RedditInfo.username.split('u/')[1], flair.flair_css_class.toLowerCase())
+                        .then(apiRes => {
+                            console.log('here')
+                            FWAPI.CreateFullUser(UserID, RedditInfo.username.split('u/')[1])
+                                .then(success => {
+                                    axios.put(`${process.env.HOSTNAME}/bot/user/${UserID}`, {
+                                        color: flair.flair_css_class.toLowerCase(),
+                                        nickname: RedditInfo.username.split('u/')[1]
+                                    })
+                                        .then(success => {
+                                            console.log(success)
+                                        })
+                                        .catch(failure => {
+                                            console.error(failure)
+                                        })
+                                    res.redirect('/')
+                                }).catch(FwapiErr => {
+                                    console.error(FwapiErr.data)
                                 })
-                                .then( success => {
-                                    console.log(success)
-                                })
-                                .catch( failure => {
-                                    console.error(failure)
-                                })
-                                res.redirect('/')
-                        }).catch( FwapiErr => {
-                            console.error(FwapiErr.data)
-                        })
+                        }).catch(console.error)
 
-                })
+                }).catch(console.error)
 
             }).catch(redditGetErr => {
                 console.error(redditGetErr)
