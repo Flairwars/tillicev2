@@ -1,0 +1,20 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [ master ]
+
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: update dependencies
+        run: npm i
+      -
+        name: Start server
+        run: pm2 start tillv2
