@@ -130,7 +130,7 @@ client.on(Events.MessageCreate, msg => {
 
   else if (
     (
-      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') ||
+      !msg.member.permissionsIn(msg.channel.id).has('ManageMessages') ||
       !msg.member.permissions.has('ADMINISTRATOR')
     ) &&
     SlowmodeFilter(msg)
