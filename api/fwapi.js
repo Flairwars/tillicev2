@@ -22,6 +22,14 @@ module.exports.GetUserByID = (memberID) => {
     return axios.get(BaseURL+`/fwUsers/${memberID}`, {headers: AuthHeader})
 }
 
+module.exports.SetPassword = (memberID, password) => {
+    return axios.post(BaseURL+`/fwUsers/${memberID}/credentials`, {
+        WPPassword: password
+    }, {
+        headers: AuthHeader
+    })
+}
+
 module.exports.CreateUserIDOnly = (memberID) => {
     return axios.post(BaseURL+'/fwUsers', {
         DiscordMemberID: memberID
