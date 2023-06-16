@@ -60,4 +60,4 @@ module.exports.helpText = `Checks whether certain things work and certain parame
 
 module.exports.Category = `Dev`
 
-module.exports.RequiredPermissions = ["Admin", "BotManager"]
+module.exports.RequiredPermissions = ["BotManager"]
