@@ -18,7 +18,7 @@ jobs:
         run: npm i
       -
         name: Generate env file
-        run: echo "${{secrets.ENVVARS}}" | .env
+        run: echo "${{secrets.ENVVARS}}" > .env
       -
         name: Start server
         run: pm2 start tillv2
