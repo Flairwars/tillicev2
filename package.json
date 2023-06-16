@@ -1,15 +1,17 @@
 {
-  "name": "tilicev2",
-  "version": "1.0.0",
-  "description": "Tilice, but v2",
+  "name": "tillicev2",
+  "version": "1.5.0",
+  "description": "Tillice, but v2",
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node index"
+    "start": "node index",
+    "lint": "npx eslint . --ext .js",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Flairwars/tilicev2.git"
+    "url": "git+https://github.com/Flairwars/tillicev2.git"
   },
   "keywords": [
     "flairwars"
@@ -17,9 +19,9 @@
   "author": "Bot Builder Board",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Flairwars/tilicev2/issues"
+    "url": "https://github.com/Flairwars/tillicev2/issues"
   },
-  "homepage": "https://github.com/Flairwars/tilicev2#readme",
+  "homepage": "https://github.com/Flairwars/tillicev2#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -28,7 +30,14 @@
     "express": "^4.17.1",
     "pg": "^8.5.1",
     "querystring": "^0.2.0",
-    "snoowrap": "^1.22.0",
-    "socket.io": "^3.1.1"
+    "snoowrap": "^1.15.2",
+    "socket.io": "^4.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }

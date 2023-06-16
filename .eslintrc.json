@@ -1,0 +1,19 @@
+{
+    "ignorePatterns":[
+        "node_modules/*",
+        "public/*",
+        "Frontend/*"
+    ],
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": "standard",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "no-prototype-builtins": "off"
+    }
+}

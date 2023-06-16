@@ -4,39 +4,41 @@ const embeds = require('../template_embeds')
 const guildCfg = require('../guildCfg')
 
 module.exports.run = (CommandStruct, PermStruct) => {
+  if (CommandStruct.args.length === 0) {
+    CommandStruct.message.channel.send({ embeds: [embeds.SendErrorEmbed('Invalid arguments', 'Please use this command in the format `suggest suggestion`')] })
+  } else {
+    const suggestion = CommandStruct.args.join(' ')
+    CommandStruct.message.channel.send({ embeds: [embeds.SkeletonEmbed()] }).then(DiscussionMessage => {
+      CommandStruct.message.guild.channels.cache.get(guildCfg.suggestions).send({
+        embeds: [
+          embeds.suggestionVotingEmbed(
+            CommandStruct.message.member.displayName,
+            CommandStruct.message.author.avatarURL(),
+            suggestion,
+            DiscussionMessage.url
+          )
+        ]
+      }).then(SuggestionVotingMessage => {
+        SuggestionVotingMessage.react('👍')
+        SuggestionVotingMessage.react('👎')
 
-    if (CommandStruct.args.length == 0) {
-        CommandStruct.message.channel.send({embeds: [embeds.SendErrorEmbed('Invalid arguments', 'Please use this command in the format `suggest suggestion`')]})
-    }
-    else {
-        const suggestion = CommandStruct.args.join(' ')
-        CommandStruct.message.channel.send({embeds: [embeds.SkeletonEmbed()]}).then( DiscussionMessage => {
-            CommandStruct.message.guild.channels.cache.get(guildCfg.suggestions).send({ embeds: [
-                embeds.suggestionVotingEmbed(
-                    CommandStruct.message.member.displayName,
-                    CommandStruct.message.author.avatarURL(),
-                    suggestion,
-                    DiscussionMessage.url
-                )
-                ]}).then( SuggestionVotingMessage => {
-                SuggestionVotingMessage.react("👍")
-                SuggestionVotingMessage.react("👎")
-
-                DiscussionMessage.edit({embeds: [
-                    embeds.suggestionDiscussionEmbed(
-                        CommandStruct.message.member.displayName,
-                        CommandStruct.message.author.avatarURL(),
-                        suggestion,
-                        SuggestionVotingMessage.url
-                    )
-                    ]})
-            })
+        DiscussionMessage.edit({
+          embeds: [
+            embeds.suggestionDiscussionEmbed(
+              CommandStruct.message.member.displayName,
+              CommandStruct.message.author.avatarURL(),
+              suggestion,
+              SuggestionVotingMessage.url
+            )
+          ]
         })
-    }
+      })
+    })
+  }
 }
 
-module.exports.helpText = `Suggest something about the megaserver`
+module.exports.helpText = 'Suggest something about the megaserver'
 
-module.exports.Category = `Utility`
+module.exports.Category = 'Utility'
 
 module.exports.RequiredPermissions = []
