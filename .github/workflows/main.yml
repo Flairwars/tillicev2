@@ -17,5 +17,8 @@ jobs:
         name: update dependencies
         run: npm i
       -
+        name: Generate env file
+        run: echo "${{secrets.ENVVARS}}" | .env
+      -
         name: Start server
-        run: env $( echo "${{secrets.ENVVARS}}" | xargs) pm2 start tillv2
+        run: pm2 start tillv2
