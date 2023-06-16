@@ -56,6 +56,10 @@ let SlowmodeFilter = (msg) => {
   if (guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id).length > 0) {
     let channel = guildCfg.slowmodedChannels.filter( smChannel => msg.channel.id === smChannel.id)[0]
 
+    if(channel.immune && channel.immune.find(id => id == msg.author.id)){
+      return false
+    }
+
     let slowmodeTimePeriod = new Date( new Date().getTime() - channel.rate*1000 )
     let slowmodeViolation = msg.channel.messages.cache.find(filteredMessages => {
       return (filteredMessages.createdAt > slowmodeTimePeriod && filteredMessages.author === msg.author)
@@ -130,8 +134,8 @@ client.on(Events.MessageCreate, msg => {
 
   else if (
     (
-      !msg.member.permissionsIn(msg.channel.id).has('MANAGE_MESSAGES') ||
-      !msg.member.permissions.has('ADMINISTRATOR')
+      !msg.member.permissionsIn(msg.channel.id).has('ManageMessages') ||
+      !msg.member.permissions.has('Administrator')
     ) &&
     SlowmodeFilter(msg)
     ) {
@@ -186,7 +190,7 @@ client.on(Events.MessageCreate, msg => {
           else {
             // User can't use it, error
             console.log(`Permissions check for ${client.CommandRegistry[CommandStruct.command].RequiredPermissions.join(', ')} failed.`)
-            msg.channel.send(embeds.SendErrorEmbed('Missing Permissions', 'You don\'t have the required permissions to do that.'))
+            msg.channel.send({embeds: [embeds.SendErrorEmbed('Missing Permissions', 'You don\'t have the required permissions to do that.')]})
           }
         }
         else {
@@ -202,7 +206,7 @@ client.on(Events.MessageCreate, msg => {
 client.login(process.env.DISCORD_TOKEN);
 
 // Set the status
-client.on("ready", () => {
+client.on(Events.ClientReady, () => {
     client.user.setPresence({
         activity: {
             name: `for ${GuildPrefix}help`,

@@ -21,7 +21,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
             // {name: "Online", value: guild.members.cache.filter(member => member.presence.status === 'online').size, inline: true}, // Disabled simply because I cannot be bothered to touch intents again.
             {name: "Roles", value: guild.roles.cache.size, inline: true},
             {name: "Moderators", value: Array.from(guild.members.cache
-                                            .filter(member => member.permissions.has('ADMINISTRATOR')) // Filter mods
+                                            .filter(member => member.permissions.has('Administrator')) // Filter mods
                                             .values())  // Convert the map values to an array
                                         .join('\n')}   // Join the array values by a newline to print them out nicely
             ])
