@@ -1,8 +1,8 @@
 {
     "ignorePatterns":[
-        "node_modules/",
-        "public/",
-        "Frontend/"
+        "node_modules/*",
+        "public/*",
+        "Frontend/*"
     ],
     "env": {
         "browser": true,

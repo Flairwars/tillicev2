@@ -6,7 +6,7 @@
   "scripts": {
     "test": "test",
     "start": "node index",
-    "lint": "npx eslint **/*.js",
+    "lint": "npx eslint . --ext .js",
     "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
