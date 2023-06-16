@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node index"
+    "start": "node index",
+    "lint": "npx eslint **/*.js",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,14 @@
     "express": "^4.17.1",
     "pg": "^8.5.1",
     "querystring": "^0.2.0",
-    "snoowrap": "^1.22.0",
-    "socket.io": "^3.1.1"
+    "snoowrap": "^1.15.2",
+    "socket.io": "^4.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
