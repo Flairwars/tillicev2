@@ -41,7 +41,14 @@ module.exports.run = async (CommandStruct, PermStruct) => {
     }
 }
 
+const notChannels = ['suggestionTreshold', 'GuildInfo']
+
 function checkChannel(allChannels, id, name){
+    // not a channel
+    if(notChannels.find(c => c == name) != undefined){
+        return ""
+    }
+
     if(allChannels.find(c => c.id == id) != null){
         return ""
     } else {

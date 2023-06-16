@@ -88,7 +88,7 @@ module.exports.SendEmbed = (Title, Text) => {
 
 
 module.exports.SendErrorEmbed = (Title, Text) => {
-    let Embed = ErrorEmbed()
+    let Embed = this.ErrorEmbed()
     Embed.setTitle(Title)
     Embed.setDescription(Text)
     return Embed
