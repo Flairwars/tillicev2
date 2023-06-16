@@ -18,6 +18,4 @@ jobs:
         run: npm i
       -
         name: Start server
-        env:
-          ENVVARS: ${{secrets.ENVVARS}}
-        run: env $( echo "$ENVVARS" | xargs) pm2 start tillv2
+        run: env $( echo "${{secrets.ENVVARS}}" | xargs) pm2 start tillv2
