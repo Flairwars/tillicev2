@@ -3,6 +3,7 @@
  */
 
 const MinimodRole = '475076640834191360'
+const BotBuilderRole = '809204327692369930'
 
 module.exports = (msg, guildID, memberID, cb) => {
     const PermStruct = {} // This will be passed along with all permission info
@@ -20,7 +21,7 @@ module.exports = (msg, guildID, memberID, cb) => {
 
     
     PermStruct.Administrator = msg.member.permissions.has('Administrator') //msg.member.hasPermission('ADMINISTRATOR')
-    PermStruct.BotManager = (msg.member.permissions.has('Administrator') || msg.member.roles.cache.has(MinimodRole)) //(msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
+    PermStruct.BotManager = (msg.member.permissions.has('Administrator') || msg.member.roles.cache.has(MinimodRole) || msg.member.roles.cache.has(BotBuilderRole)) //(msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.has(MinimodRole))
 
     cb(PermStruct, CommandStruct)
 }

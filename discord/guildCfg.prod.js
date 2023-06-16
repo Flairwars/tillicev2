@@ -5,19 +5,22 @@ module.exports.suggestions = '482269113389940737'
 module.exports.topicSuggestions = '554654485260271616'
 module.exports.guildDmLoggingChannel = '485223000875204618'
 module.exports.modQueueChannelId = '744768964630020136'
-module.exports.voidGeneral = '48522300087520461'
+module.exports.voidGeneral = '485223000875204618'
 module.exports.newYearsChannelId = '653002441649815571'
 module.exports.qdbChannelId = '466292953959104512'
 module.exports.slowmodedChannels = [
     {
+        // daily-message
         id: '473704592287203338',
-        rate: 57600
+        rate: 50400
     },
     {
+        // daily-question
         id: '503606625739866113',
-        rate: 57600
+        rate: 50400
     },
     {
+        // lore-showcase
         id: '814387089696751626',
         rate: 120
     }

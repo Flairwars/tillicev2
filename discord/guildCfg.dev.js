@@ -19,7 +19,7 @@ module.exports.slowmodedChannels = [
     },
     {
         id: '1115211400478994452',
-        rate: 120
+        rate: 120,
     }
 ]
 
