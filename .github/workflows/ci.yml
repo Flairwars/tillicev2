@@ -1,0 +1,14 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - 
+                name: Install deps
+                run: npm i
+            -
+                name: Run ESLint
+                run: npm run lint
