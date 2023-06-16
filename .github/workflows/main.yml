@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    environment: tillicev2
     steps:
       - 
         name: Checkout
