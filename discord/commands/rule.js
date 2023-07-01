@@ -16,7 +16,7 @@ module.exports.run = async (CommandStruct, PermStruct) => {
   title = ''
   description = ''
 
-  if (argText && argText > 0 && argText < (rules.length - 1)) {
+  if (argText && argText > 0 && argText <= rules.length) {
     title = `Rule ${argText}`
     description = rules[argText - 1]
   } else {
