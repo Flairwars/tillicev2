@@ -18,10 +18,10 @@ module.exports.run = async (CommandStruct, PermStruct) => {
 
   if (argText && argText > 0 && argText < (rules.length - 1)) {
     title = `Rule ${argText}`
-    description = rules[argText]
+    description = rules[argText - 1]
   } else {
     title = 'No rule defined.'
-    description = 'For a complete list of rules, head to: <#463831713651359774>'
+    description = 'For a complete list of rules, head to: <#1066857730066894950>'
   }
   msg.reply({ embeds: [embeds.SendEmbed(title, description)] })
 }
